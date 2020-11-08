@@ -1,13 +1,4 @@
 function part2
-%      y = [ 1200
-%            25 ];
-%      h = 0.1;
-%      t = 0:h:5;
-%      
-%      for i = 1:length(t)-1
-%         yp = y(:, i) + h/2 * f(y(:, i));
-%         y(:, i+1) = y(:, i) + h * f(yp);
-%      end
     T = [-1500, -1000, -300, -50, -1, 1, 20, 50, 200, 400, 1000, 2000];
     h = [178, 176, 168, 161, 160, 160, 160.2, 161, 165, 168, 174, 179];
     
@@ -22,24 +13,21 @@ function part2
   
 
     plot(T, h, 'o', ti, hi);
-     % hold on
-     % plot(t, y(1, :),'o', t, y(2, :));
 end
 
-function a=fa(xp, yp, stopien_wielomianu)
-    ilosc_wartosci=length(xp)
+function ah=fa(xT, yh, p)
+    rows = length(xT);
     
-    M=ones(ilosc_wartosci, stopien_wielomianu + 1);
-    b=zeros(length(yp), 1)
+    M = ones(rows, p + 1);
+    Y = transpose(yh);
     
-    for indeks_wiersza=1:ilosc_wartosci
-        for indeks_wspolczynnika=1:stopien_wielomianu
-            M(indeks_wiersza, indeks_wspolczynnika + 1)=xp(indeks_wiersza)^indeks_wspolczynnika;
+    for i=1:rows
+        for j=1:p
+            M(i, j+1) = xT(i)^j;
         end
-        b(indeks_wiersza, 1)=yp(indeks_wiersza);
     end
     
-    a = (transpose(M)*M) \ (transpose(M)*b);
+    ah = (transpose(M)*M) \ (transpose(M)*Y);
 end
 
 function vh = fh(T, h, ah, iT)
