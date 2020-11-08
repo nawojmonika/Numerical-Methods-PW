@@ -83,7 +83,6 @@
 \renewcommand{\footrulewidth}{0.4pt}
 \fancyhead[RO] {\footnotesize\thepage}
 \fancyhead[LO] {\footnotesize{\ifx\classlocal\undefined{}\else\itshape\classlocal{} --{} \fi}\makeatletter\@title\makeatother }
-\fancyfoot[RO] {\footnotesize\itshape\makeatletter\@author\makeatother}
 
 % New title style for the document
 \renewcommand{\maketitle}{%
