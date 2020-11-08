@@ -30,6 +30,7 @@
 \newcommand{\CourseLang}{Przedmiot}
 \newcommand{\DateLang}{Data}
 \newcommand{\StudentLang}{Autor}
+\newcommand{\Index}{Numer albumu}
 \newcommand{\ProfessorLang}{Prowadzący}
 
 % Header and footers, we will use the titles also
@@ -93,6 +94,8 @@
         \vspace{10pt}
         {\LARGE \bfseries \@title} \\[5pt]
         \StudentLang: {\itshape \@author}
+        \\
+        \Index: {\itshape  315914 }
         \vspace{8pt}
         \hrule
         \vspace{10pt}
