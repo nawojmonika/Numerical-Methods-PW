@@ -1,8 +1,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Felipe Portales' HomeWorks
 % Maintainer: Felipe Portales-Oliva (f.portales.oliva@gmail.com)
-% 
-% Document class to produce simple yet stylish homework submissions 
+%
+% Document class to produce simple yet stylish homework submissions
 %
 % This package is public domain, according to :
 %    The Unlicense <https://unlicense.org>
@@ -11,7 +11,7 @@
 %%% Identification
 
 \NeedsTeXFormat{LaTeX2e} % we need to have LaTeX2e for this to compile
-\ProvidesClass{fphw}[2019/03/19] % fpshw is the name we need to provide to 
+\ProvidesClass{fphw}[2019/03/19] % fpshw is the name we need to provide to
                                   % the documentclass command on the .tex file
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -27,10 +27,10 @@
 \newcommand{\institute}[1]{ \newcommand{\instituteloc}{#1} }
 
 %these are auxiliary definitions used in the title section
-\newcommand{\CourseLang}{Course}
-\newcommand{\DateLang}{Due date}
-\newcommand{\StudentLang}{Student name}
-\newcommand{\ProfessorLang}{Professor}
+\newcommand{\CourseLang}{Przedmiot}
+\newcommand{\DateLang}{Data}
+\newcommand{\StudentLang}{Autor}
+\newcommand{\ProfessorLang}{Prowadzący}
 
 % Header and footers, we will use the titles also
 \RequirePackage{fancyhdr}
@@ -67,20 +67,8 @@
 %%%% Here we do more declarations and call other files
 
 
-% we need to load 
+% we need to load
 \LoadClass{article}
-
-
-% we will modify sections, subsections and sub subsections
-\RequirePackage{titlesec}
-% Modification of section 
-\titleformat{\section}[block]{\normalsize\bfseries\filcenter}{\thesection.}{.3cm}{} 
-
-% modification of subsection and sub sub section
-\titleformat{\subsection}[runin]{\bfseries}{ \thesubsection.}
-{1mm}{}[.\quad]
-\titleformat{\subsubsection}[runin]{\bfseries\itshape}{ \thesubsubsection.}
-{1mm}{}[.\quad]
 
 % Geometry lets us modify the sizes of the document nicely
 \RequirePackage{geometry}
@@ -90,7 +78,7 @@
 \fancyhead{}
 \fancyfoot{}
 \pagestyle{fancy}
-\renewcommand{\headrulewidth}{0.4pt} % we want rules 
+\renewcommand{\headrulewidth}{0.4pt} % we want rules
 \renewcommand{\footrulewidth}{0.4pt}
 \fancyhead[RO] {\footnotesize\thepage}
 \fancyhead[LO] {\footnotesize{\ifx\classlocal\undefined{}\else\itshape\classlocal{} --{} \fi}\makeatletter\@title\makeatother }
@@ -109,7 +97,7 @@
         \hrule
         \vspace{10pt}
         \ifx\classlocal\undefined{}\else\CourseLang: {\itshape \classlocal{} \ifx\professorloc\undefined{}\else{-- }\fi  }\fi
-        \ifx\professorloc\undefined{}\else{\ProfessorLang: {\itshape\professorloc}}\fi 
+        \ifx\professorloc\undefined{}\else{\ProfessorLang: {\itshape\professorloc}}\fi
         \\
         \DateLang: {\itshape\@date}
         \vspace{20pt}
