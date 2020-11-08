@@ -1,16 +1,29 @@
 function part1
      y = [ 1200
            25 ];
-     h = 1e-5;
+     h = 0.1;
      t = 0:h:5;
      
-     for i = 1:length(t)-1
+    ye = getEuler(t, y, h);
+    yie = getImprovedEuler(t, y, h);
+     
+     hold on
+     plot(t, ye(1, :), t, ye(2, :), t, yie(1, :), t, yie(2, :));
+end
+
+function ye = getEuler(t, y, h)
+    for i = 1:length(t)-1
         yp = y(:, i) + h/2 * f(y(:, i));
         y(:, i+1) = y(:, i) + h * f(yp);
      end
-     
-     hold on
-     plot(t, y(1, :), t, y(2, :));
+    ye = y;
+end
+
+function yie = getImprovedEuler(t, y, h)
+    for i = 1:length(t)-1
+            y(:, i+1) = y(:, i) + h * f(y(:,i));
+    end
+    yie = y;
 end
 
 function dy = f(y)

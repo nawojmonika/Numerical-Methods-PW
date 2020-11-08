@@ -1,4 +1,4 @@
-function part2
+function part2-1a
      y = [ 1200
            25 ];
      h = 0.1;
