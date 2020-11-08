@@ -4,7 +4,7 @@ function part2
     
     ti = -1500:1:2000;
     hi = zeros(length(ti), 1);
-    pi = 2:1:10;
+    pi = 2:1:5;
     ea = zeros(length(pi), 1);
     
     for i=1:length(pi)
@@ -12,7 +12,8 @@ function part2
     end
     
     ea
-    p = 6
+    
+    p = find(ea==min(ea))
     
     ah = fa(T, H, p);
     

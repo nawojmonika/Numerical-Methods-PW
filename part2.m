@@ -4,15 +4,14 @@ function part2
     
     ti = -1500:1:2000;
     hi = zeros(length(ti), 1);
-    pi = 2:1:5;
+    pi = 1:1:5;
     ea = zeros(length(pi), 1);
     
     for i=1:length(pi)
         ea(i) = fe(T, H, pi(i));
     end
-    
-    ea
-    p = find(ea==min(ea))
+
+    p = find(ea==min(ea));
     
     ah = fa(T, H, p);
     
