@@ -10,21 +10,18 @@ function part2
     end
 
     p = find(approxE==min(approxE));
-    approxY = approx(T, H, p);
-
     ti = -1500:1:2000;
-    approxPolyY = zeros(length(ti), 1);
     splineY = zeros(length(ti), 1);
 
     for j=1:length(ti)
-        approxPolyY(j) = poly(T, H, approxY, ti(j));
+        approxY(j) = approx(T, H, p, ti(j));
         splineY(j) = spline(T, H, ti(j));
     end
 
-%    plot(T, H, 'o', ti, approxPolyY, ti, splineY);
+    plot(T, H, 'o', ti, approxY, ti, splineY);
 end
 
-function a = approx(xp, yp, p)
+function a = approx(xp, yp, p, x)
     rows = length(xp);
 
     M = ones(rows, p + 1);
@@ -35,7 +32,8 @@ function a = approx(xp, yp, p)
             M(i, j+1) = xp(i)^j;
         end
     end
-    a = (transpose(M)*M) \ (transpose(M)*Y);
+    iy = (transpose(M)*M) \ (transpose(M)*Y);
+    a = poly(xp, yp, iy, x);
 end
 
 function y = poly(xp, yp, iy, ix)
@@ -77,6 +75,13 @@ function y = spline(xp, yp, x)
             break;
         end
     end
-    
+     A = [1 xp(i)
+          1 xp(i+1)
+        ];
+     B = [yp(i)
+          yp(i+1)
+        ];
+     a = A\B;
+     y = a(1) + a(2) * x;
 end
 
