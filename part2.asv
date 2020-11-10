@@ -21,7 +21,7 @@ function part2
         splineY(j) = spline(T, H, ti(j));
     end
 
-    plot(T, H, 'o', ti, approxPolyY, ti, splineY);
+%    plot(T, H, 'o', ti, approxPolyY, ti, splineY);
 end
 
 function a = approx(xp, yp, p)
@@ -77,13 +77,6 @@ function y = spline(xp, yp, x)
             break;
         end
     end
-     A = [1 xp(i)
-          1 xp(i+1)
-        ];
-     B = [yp(i)
-          yp(i+1)
-        ];
-     a = A\B;
-     y = a(1) + a(2) * x;
+    
 end
 
