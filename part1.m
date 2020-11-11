@@ -1,43 +1,20 @@
 function part1
      y = [ 1200
            25 ];
-     h = 0.1;
-     t = 0:h:5;
-     
-    ye = getEuler(t, y, h);
-    yie = getImprovedEuler(t, y, h);
-     
+     step = 0.1;
+     x = 0:step:5;
+     conduct = 160; % [J / s * m^2]
+
+    ye = euler(x, y, step, conduct);
+    yie = improvedEuler(x, y, step, conduct);
+
      hold on
-     plot(t, ye(1, :), t, ye(2, :), t, yie(1, :), t, yie(2, :));
+     plot(x, ye(1, :), x, ye(2, :), x, yie(1, :), x, yie(2, :));
 end
 
-function ye = getEuler(t, y, h)
+function yie = euler(t, y, step, conduct)
     for i = 1:length(t)-1
-        yp = y(:, i) + h/2 * f(y(:, i));
-        y(:, i+1) = y(:, i) + h * f(yp);
-     end
-    ye = y;
-end
-
-function yie = getImprovedEuler(t, y, h)
-    for i = 1:length(t)-1
-            y(:, i+1) = y(:, i) + h * f(y(:,i));
+            y(:, i+1) = y(:, i) + step * tempModel(y(:,i), conduct);
     end
     yie = y;
-end
-
-function dy = f(y)
-    Tb = y(1);
-    Tw = y(2);
-    h = 160; % [J / s * m^2]
-    A = 0.0109; % [m^2]
-    mb = 0.2; % [kg]
-    mw = 2.5; % [kg]
-    cb = 3.85; % [J / kg * K]
-    cw = 4.1813; % [J /kg * K]
-    dy = [
-        ((Tw - Tb) * (h * A)) / (mb * cb )
-        ((Tb - Tw) * (h * A)) / (mw * cw)
-    ];
-
 end
