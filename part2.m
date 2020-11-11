@@ -19,7 +19,7 @@ function part2
         splineY(j) = spline(T, H, ti(j));
     end
 
-    i = simpsonIntegral(T, H, 100, p, @absFactorDiff);
+%     eavg = avgFactorDiff(T, H, p);
 
 %     plot(T, H, 'o', ti, approxY, ti, splineY);
     shade(ti, approxY, ti, splineY, 'FillType', [1, 2; 2, 1]);
@@ -114,3 +114,8 @@ function x = getIntegralX(a, h, k)
     x = a + (k * h);
 end
 
+function eavg = avgFactorDiff(xp, yp, p)
+    i = simpsonIntegral(xp, yp, 100, p, @absFactorDiff);
+    n = abs(xp(1)) + abs(xp(end));
+    eavg = (1/n) * i;
+end
