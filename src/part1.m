@@ -8,13 +8,12 @@ function part1
     ye = euler(x, y, step, conduct);
     yie = improvedEuler(x, y, step, conduct);
 
-     hold on
-     plot(x, ye(1, :), x, ye(2, :), x, yie(1, :), x, yie(2, :));
+    plot(x, ye(1, :), x, ye(2, :), x, yie(1, :), x, yie(2, :));
 end
 
 function yie = euler(t, y, step, conduct)
     for i = 1:length(t)-1
-            y(:, i+1) = y(:, i) + step * tempModel(y(:,i), conduct(i));
+        y(:, i+1) = y(:, i) + step * tempModel(y(:,i), conduct(i));
     end
     yie = y;
 end

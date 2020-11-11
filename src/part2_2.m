@@ -7,9 +7,9 @@ function part2_2
     approxY = zeros(length(ti), 1);
     splineY = zeros(length(ti), 1);
 
-    for j=1:length(ti)
-        approxY(j) = approx(T, H, p, ti(j));
-        splineY(j) = spline(T, H, ti(j));
+    for i=1:length(ti)
+        approxY(i) = approx(T, H, p, ti(i));
+        splineY(i) = spline(T, H, ti(i));
     end
 
      eavg = avgFactorDiff(T, H, p);
