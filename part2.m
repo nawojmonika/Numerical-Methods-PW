@@ -21,7 +21,8 @@ function part2
 
     i = simpsonIntegral(T, H, 100, p, @absFactorDiff);
 
-%    plot(T, H, 'o', ti, approxY, ti, splineY);
+%     plot(T, H, 'o', ti, approxY, ti, splineY);
+    shade(ti, approxY, ti, splineY, 'FillType', [1, 2; 2, 1]);
 end
 
 function a = approx(xp, yp, p, x)
@@ -107,7 +108,6 @@ function i = simpsonIntegral(xp, yp, m, p, f)
         f2 = f(xp, yp, p, x2);
         i = i + (h/3 * (f0 + (4 * f1) + f2));
     end
-    i
 end
 
 function x = getIntegralX(a, h, k)
