@@ -37,6 +37,8 @@
 \usepackage{listings} % Required for insertion of code
 
 \usepackage{enumerate} % To modify the enumerate environment
+\usepackage{textcomp}
+\usepackage{amsmath}
 
 %----------------------------------------------------------------------------------------
 %	ASSIGNMENT INFORMATION
@@ -67,7 +69,10 @@
 \section{Wstęp}
 Celem projektu zaliczeniowego jest implementacja wybranych metod numerycznych
 oraz ich weryfikacja na podstawie zdobytej wiedzy oraz prób eksperymentalnych.
+Weryfikacja projektu zawiera określenie złożoności obliczeniowej oraz badanie
+dokładności rozwiązania w zależności od parametrów.
 Implementacja ninejszego projektu została zrealizowana w środowisku \textbf{MATLAB}.
+\\
 \\
 Zasadniczym zagadnieniem projektu jest zbudowanie modelu numerycznego dla procesu chłodzenia
 metalowego pręta w pojemniku wypełnionego cieczą (\textit{specjalnym oleju chłodzącym}).
@@ -76,6 +81,47 @@ który obejmuje konieczność prędkiego schłodzenia sporej ilośći prętów w
 Zadanie to obejmuje również część optymalizacyjną, polegającą na wyznaczeniu
 najkorzystniejszych parametrów dotyczących zbiorników z cieczą chłodzącą
 oraz potrzebnych ich ilości w celu zagwarantowania ciągłej pracy.
+\\
+\\
+Przykładem takiego procesu jest zadanie polegające na schłodzeniu 100000 prętów o masie \( m_b \) 0.25 kg
+w czasie nieprzekraczającym 24 godzin oraz z optymalnymi kosztami chłodzenia.
+Dodatkowymi parametrami w tym procesie to: czas wymiany zbiornika wynoszący 20 sekund,
+koszt płynu chłodzącego (20 zł za litr), czas wymiany pręta (5 sekund) oraz koszt jednego zbiornika,
+który jest związany z jego pojemnością i wynosi 100 zł za litr.
+Cześcią tego zadania inżynierskiego jest określenie ilości pojemników potrzebnych
+do działania całego procesu, przy założeniu że słodzenie jednego pojemnika ze 125 \textdegree{}C do 25 \textdegree{}C
+trwa 4 godziny.
+\\
+\\
+Obserwacja zmian temperatury pręta \( T_b \) oraz oleju \( T_w \) zostałą użyta do modelowania
+fizycznego. Ciepło przenika przez ścianki pręta o powierzchni \( A \) ze stałym eksperymentalnie
+określionym współczinnikiem \( A \), który w przeprowadzonych symulacjach przyjmuje wartość: \(0.0109 m^2\).
+Materiał, z którego został zbudowany pręt charakteryzuje się pewną zdolnością kumulacji ciepła,
+która jest odniesiona do masy pręta \( m_b \) oraz jest opisana za pomocą pojemności cieplnej \( c_p \).
+Analogicznia charakterystyka odnosi się do oleju o masie: \( m_w \) oraz pojemności cieplnej: \( c_w \).
+
+\newpage
+
+W \textbf{modelu matematycznym} przyjmujemy założenie, że proces wymiany ciepła
+jest opisany następującym układem równań różniczkowych zwyczajnych,
+w którym obserwujemy dwie zmiany stanu: temperaturę pręta oraz cieczy:
+
+\begin{align*}
+	 \frac{m_b c_b}{hA} \frac{dT_b}{dt} + T_b = T_w \\
+	 \frac{m_w c_w}{hA} \frac{dT_w}{dt} + T_w = T_b
+\end{align*}
+
+gdzie: \\
+\( m_b \) - masa pręta \\
+\( c_b \) - pojemność cieplna pręta \\
+\( h \) - współczynnik przewodnictwa cieplnego \\
+\( A \) -  powierzchnia pręta \\
+\( m_w \) - masa płynu chłodzącego \\
+\( c_w(T) \) - pojemność cieplna płynu chłodzącego zależna od temperatury T \\
+\\
+W modelu przyjmujemy założenie, że temperatura pręta oraz oleju jest stała w całej przestrzeni.
+Założenie to zakłada, że mamy wysoką wartość współczynnika przewodnictwa cieplnego, równocześnie
+zakładamy, że pomijamy to ograniczenie.
 
 \section{Część 1}
 \subsection{Podsumowanie współczynników}
