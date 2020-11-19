@@ -39,6 +39,36 @@
 \usepackage{enumerate} % To modify the enumerate environment
 \usepackage{textcomp}
 \usepackage{amsmath}
+\usepackage{subcaption}
+\usepackage[justification=centering]{caption}
+\usepackage{float}
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+backgroundcolor=\color{backcolour},
+commentstyle=\color{codegreen},
+keywordstyle=\color{magenta},
+numberstyle=\tiny\color{codegray},
+stringstyle=\color{codepurple},
+basicstyle=\ttfamily\footnotesize,
+breakatwhitespace=false,
+breaklines=true,
+captionpos=b,
+keepspaces=true,
+numbers=left,
+numbersep=5pt,
+showspaces=false,
+showstringspaces=false,
+showtabs=false,
+tabsize=2
+}
+
+\lstset{style=mystyle}
 
 %----------------------------------------------------------------------------------------
 %	ASSIGNMENT INFORMATION
@@ -106,10 +136,10 @@ W \textbf{modelu matematycznym} przyjmujemy założenie, że proces wymiany ciep
 jest opisany następującym układem równań różniczkowych zwyczajnych,
 w którym obserwujemy dwie zmiany stanu: temperaturę pręta oraz cieczy:
 
-\begin{align*}
-	 \frac{m_b c_b}{hA} \frac{dT_b}{dt} + T_b = T_w \\
-	 \frac{m_w c_w}{hA} \frac{dT_w}{dt} + T_w = T_b
-\end{align*}
+\begin{flalign*}
+	 &\frac{m_b c_b}{hA} \frac{dT_b}{dt} + T_b = T_w \\
+	 &\frac{m_w c_w}{hA} \frac{dT_w}{dt} + T_w = T_b
+\end{flalign*}
 
 gdzie: \\
 \( m_b \) - masa pręta \\
@@ -124,24 +154,96 @@ Założenie to zakłada, że mamy wysoką wartość współczynnika przewodnictw
 zakładamy, że pomijamy to ograniczenie.
 
 \section{Część 1}
+Część pierwsza niniejszego projektu zakłada zaprojektowanie
+oraz zaimplementowanie symulatora przebiegów czasowych temperatury pręta
+oraz oleju chłodzącego.
+Przyjęta została temperatura początkowa pręta \( T_b(0) = 1200 \)\textdegree{}C oraz początkową temperaturę
+oleju chłodzącego \( T_w(0) = 25 \)\textdegree{}C.
 \subsection{Podsumowanie współczynników}
+Przebiegi czasowe temperatury pręta oraz temperatury oleju chłodzącego zostały przeprowadzone dla poniższych współczynników: \\
+\begin{flalign*}
+	& h = 160 [\frac{J}{s * m^2}] \\
+	& A = 0.0109 [m^2] \\
+	& m_b = 0.2 [kg] \\
+	& m_w = 2.5 [kg] \\
+	& c_b = 3.85 [\frac{J}{kg * K}] \\
+	& cw = 4.1813 [\frac{J}{kg * K}] \\
+\end{flalign*}
+
 \subsection{Kod źródłowy programu}
+Ze względu na reużywalność niektórych funkcji programu w dalszych etapach projektu,
+kod źródłowy dla części pierwszej został podzielony na 3 pliki: \\
+Plik z funkcją sterującą z danymi parametrami oraz rysującą wykresy
+oraz funkcją implementującą \textit{funkcję Eulera}:
+\lstinputlisting[language=MatLab]{../src/part1.m}
+Ulepszona funkcja Eulera:
+\lstinputlisting[language=MatLab]{../src/improvedEuler.m}
+Funkcja wykonująca całkowanie zadanego równania stanu
+\lstinputlisting[language=MatLab]{../src/tempModel.m}
 \subsection{Interpretacja wyników}
-\subsection{Analiza rozwiązania}
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{../assets/przebieg-czasowy-1.png}
+	\caption{Parametry początkowe: \(T_b = 1200\) [\textdegree{}C], \(T_w = 25\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 3\)[s]}
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{../assets/przebieg-czasowy-2.png}
+	\caption{Parametry początkowe: \(T_b = 800\) [\textdegree{}C], \(T_w = 25\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 3\)[s]}
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{../assets/przebieg-czasowy-3.png}
+	\caption{Parametry początkowe: \(T_b = 1100\) [\textdegree{}C], \(T_w = 70\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 3\)[s]}
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{../assets/przebieg-czasowy-4.png}
+	\caption{Parametry początkowe: \(T_b = 1200\) [\textdegree{}C], \(T_w = 25\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 5\)[s]}
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{../assets/przebieg-czasowy-5.png}
+	\caption{Parametry początkowe: \(T_b = 800\) [\textdegree{}C], \(T_w = 25\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 5\)[s]}
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{../assets/przebieg-czasowy-6.png}
+	\caption{Parametry początkowe: \(T_b = 1100\) [\textdegree{}C], \(T_w = 70\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 2\)[s]}
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{../assets/przebieg-czasowy-7.png}
+	\caption{Parametry początkowe: \(T_b = 1100\) [\textdegree{}C], \(T_w = 70\)[\textdegree{}C], \(m_w = 5\)[kg], \(t = 2\)[s]}
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{../assets/przebieg-czasowy-8.png}
+	\caption{Parametry początkowe: \(T_b = 1100\) [\textdegree{}C], \(T_w = 70\)[\textdegree{}C], \(m_w = 10\)[kg], \(t = 2\)[s]}
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{../assets/przebieg-czasowy-9.png}
+	\caption{Parametry początkowe: \(T_b = 1100\) [\textdegree{}C], \(T_w = 70\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 4\)[s]}
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{../assets/przebieg-czasowy-10.png}
+	\caption{Parametry początkowe: \(T_b = 1100\) [\textdegree{}C], \(T_w = 70\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 5\)[s]}
+\end{figure}
+
+
 \section{Część 2}
 \subsection{Podsumowanie współczynników}
 \subsection{Kod źródłowy programu}
 \subsection{Interpretacja wyników}
-\subsection{Analiza rozwiązania}
 \section{Część 3}
 \subsection{Podsumowanie współczynników}
 \subsection{Kod źródłowy programu}
 \subsection{Interpretacja wyników}
-\subsection{Analiza rozwiązania}
 \section{Część 4}
 \subsection{Podsumowanie współczynników}
 \subsection{Kod źródłowy programu}
 \subsection{Interpretacja wyników}
-\subsection{Analiza rozwiązania}
-\section{Podsumowanie}
+\section{Analiza rozwiązania}
 \end{document}
