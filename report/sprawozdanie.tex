@@ -43,6 +43,8 @@
 \usepackage[justification=centering]{caption}
 \usepackage{float}
 \usepackage{xcolor}
+\usepackage{polski}
+\usepackage[polish]{babel}
 
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
@@ -182,22 +184,59 @@ Funkcja wykonująca całkowanie zadanego równania stanu
 \lstinputlisting[language=MatLab]{../src/tempModel.m}
 \subsection{Interpretacja wyników}
 
+\subsubsection{Krok całkowania h}
+Krok całkowania \(h\) został dobrany metodą eksperymentalną z przedziału: 0.001 - 1.
+
 \begin{figure}[H]
-	\includegraphics[width=\linewidth]{../assets/przebieg-czasowy-1.png}
-	\caption{Parametry początkowe: \(T_b = 1200\) [\textdegree{}C], \(T_w = 25\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 3\)[s]}
+	\includegraphics[width=\linewidth]{../assets/krok-h-1.png}
+	\caption{Parametry początkowe: krok całkowania \(h = 0.001\), \(T_b = 1200\) [\textdegree{}C], \(T_w = 25\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 3\)[s]}
+	\label{fig:krok-1}
 \end{figure}
 
 \begin{figure}[H]
+	\includegraphics[width=\linewidth]{../assets/krok-h-2.png}
+	\caption{Parametry początkowe: krok całkowania \(h = 0.01\), \(T_b = 1200\) [\textdegree{}C], \(T_w = 25\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 3\)[s]}
+	\label{fig:krok-2}
+
+	\includegraphics[width=\linewidth]{../assets/krok-h-3.png}
+	\caption{Parametry początkowe: krok całkowania \(h = 0.1\), \(T_b = 1200\) [\textdegree{}C], \(T_w = 25\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 3\)[s]}
+	\label{fig:krok-3}
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{../assets/krok-h-4.png}
+	\caption{Parametry początkowe: krok całkowania \(h = 1\), \(T_b = 1200\) [\textdegree{}C], \(T_w = 25\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 3\)[s]}
+	\label{fig:krok-4}
+\end{figure}
+
+Dla bardzo małego kroku całkowania \(h\) \textit{nie widać} wyraźnej różnicy między prebiegiem temperatury
+obliczonym za pomocą \textbf{funkcji Eulera}, a tym obliczonym za pomocą \textbf{ulepszonej funkcji Eulera}.
+Jest to widoczne na rysunkach \ref{fig:krok-1} oraz \ref{fig:krok-2}.\\
+Na rysunku \ref{fig:krok-3} widać wyraźną różnicę w przebiegu temperatury pręta przy kroku całkowania \(h = 0.1\).
+Wykres przebiegu temperatury obliczony za pomocą \textbf{ulepszonej funkcji Eulera} jest bardziej zbliżony,
+do tego, do którego został użyty mniejszy krok całowania w poprzednich próbach eksperymentalnych. \\
+Natomiast krok całkowania \(h = 1\) przedstawiony na rysunku \ref{fig:krok-4} okazał się zbyt duży,
+aby przebieg temperatury obliczony przez dowolną z tych dwóch funkcji prezentował sensowne dane. \\
+Za pomocą tego eksperymentu został wybrany krok całkowania \(h = 0.1\) i właśnie taki będzie używany
+w następnych próbach eksperymentalnych. \\
+Jednocześnie \textbf{ulepszona funkcja Eulera} ze względu na większą dokładność wyników przy większym kroku całkowania
+będzie wykorzystywana do symulacji w następnych częściach tego projektu.
+
+\subsubsection{Przebieg czasowy temperatury pręta oraz oleju chłodzącego}
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{../assets/przebieg-czasowy-1.png}
+	\caption{Parametry początkowe: \(T_b = 1200\) [\textdegree{}C], \(T_w = 25\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 3\)[s]}
+
 	\includegraphics[width=\linewidth]{../assets/przebieg-czasowy-2.png}
 	\caption{Parametry początkowe: \(T_b = 800\) [\textdegree{}C], \(T_w = 25\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 3\)[s]}
 \end{figure}
 
+
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{../assets/przebieg-czasowy-3.png}
 	\caption{Parametry początkowe: \(T_b = 1100\) [\textdegree{}C], \(T_w = 70\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 3\)[s]}
-\end{figure}
 
-\begin{figure}[H]
 	\includegraphics[width=\linewidth]{../assets/przebieg-czasowy-4.png}
 	\caption{Parametry początkowe: \(T_b = 1200\) [\textdegree{}C], \(T_w = 25\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 5\)[s]}
 \end{figure}
@@ -205,9 +244,7 @@ Funkcja wykonująca całkowanie zadanego równania stanu
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{../assets/przebieg-czasowy-5.png}
 	\caption{Parametry początkowe: \(T_b = 800\) [\textdegree{}C], \(T_w = 25\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 5\)[s]}
-\end{figure}
 
-\begin{figure}[H]
 	\includegraphics[width=\linewidth]{../assets/przebieg-czasowy-6.png}
 	\caption{Parametry początkowe: \(T_b = 1100\) [\textdegree{}C], \(T_w = 70\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 2\)[s]}
 \end{figure}
@@ -215,9 +252,7 @@ Funkcja wykonująca całkowanie zadanego równania stanu
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{../assets/przebieg-czasowy-7.png}
 	\caption{Parametry początkowe: \(T_b = 1100\) [\textdegree{}C], \(T_w = 70\)[\textdegree{}C], \(m_w = 5\)[kg], \(t = 2\)[s]}
-\end{figure}
 
-\begin{figure}[H]
 	\includegraphics[width=\linewidth]{../assets/przebieg-czasowy-8.png}
 	\caption{Parametry początkowe: \(T_b = 1100\) [\textdegree{}C], \(T_w = 70\)[\textdegree{}C], \(m_w = 10\)[kg], \(t = 2\)[s]}
 \end{figure}
@@ -225,13 +260,10 @@ Funkcja wykonująca całkowanie zadanego równania stanu
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{../assets/przebieg-czasowy-9.png}
 	\caption{Parametry początkowe: \(T_b = 1100\) [\textdegree{}C], \(T_w = 70\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 4\)[s]}
-\end{figure}
 
-\begin{figure}[H]
 	\includegraphics[width=\linewidth]{../assets/przebieg-czasowy-10.png}
 	\caption{Parametry początkowe: \(T_b = 1100\) [\textdegree{}C], \(T_w = 70\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 5\)[s]}
 \end{figure}
-
 
 \section{Część 2}
 \subsection{Podsumowanie współczynników}
