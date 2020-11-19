@@ -45,6 +45,7 @@
 \usepackage{xcolor}
 \usepackage{polski}
 \usepackage[polish]{babel}
+\usepackage{csvsimple}
 
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
@@ -211,7 +212,7 @@ Przebiegi czasowe temperatury pręta oraz temperatury oleju chłodzącego zosta�
 
 \subsection{Kod źródłowy programu}
 Ze względu na reużywalność niektórych funkcji programu w dalszych etapach projektu,
-kod źródłowy dla części pierwszej został podzielony na 3 pliki: \\
+kod źródłowy dla części pierwszej został podzielony na 4 pliki: \\
 Plik z funkcją sterującą z danymi parametrami oraz rysującą wykresy
 oraz funkcją implementującą \textit{prostą metodę Eulera}:
 \lstinputlisting[language=MatLab]{../src/part1.m}
@@ -219,6 +220,11 @@ Ulepszona metoda Eulera:
 \lstinputlisting[language=MatLab]{../src/improvedEuler.m}
 Funkcja wykonująca całkowanie zadanego równania stanu
 \lstinputlisting[language=MatLab]{../src/tempModel.m}
+Funkcja licząca błąd względny
+\lstinputlisting[language=MatLab]{../src/relativeError.m}
+
+\newpage
+
 \subsection{Interpretacja wyników}
 
 \subsubsection{Krok całkowania h}
@@ -226,27 +232,27 @@ Krok całkowania \(h\) został dobrany metodą eksperymentalną z przedziału: 0
 
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{../assets/part1/krok-h-1.png}
-	\caption{Parametry początkowe: krok całkowania \(h = 0.001\), \(T_b = 1200\) [\textdegree{}C], \(T_w = 25\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 3\)[s]}
+	\caption{Parametry: krok całkowania(0) \(h = 0.001\), \(T_b = 1200\)(0) [\textdegree{}C], \(T_w = 25\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 3\)[s]}
 	\label{fig:krok-1}
 \end{figure}
 
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{../assets/part1/krok-h-2.png}
-	\caption{Parametry początkowe: krok całkowania \(h = 0.01\), \(T_b = 1200\) [\textdegree{}C], \(T_w = 25\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 3\)[s]}
+	\caption{Parametry: krok całkowania(0) \(h = 0.01\), \(T_b = 1200\)(0) [\textdegree{}C], \(T_w = 25\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 3\)[s]}
 	\label{fig:krok-2}
 
 	\includegraphics[width=\linewidth]{../assets/part1/krok-h-3.png}
-	\caption{Parametry początkowe: krok całkowania \(h = 0.1\), \(T_b = 1200\) [\textdegree{}C], \(T_w = 25\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 3\)[s]}
+	\caption{Parametry: krok całkowania(0) \(h = 0.1\), \(T_b = 1200\)(0) [\textdegree{}C], \(T_w = 25\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 3\)[s]}
 	\label{fig:krok-3}
 \end{figure}
 
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{../assets/part1/krok-h-4.png}
-	\caption{Parametry początkowe: krok całkowania \(h = 1\), \(T_b = 1200\) [\textdegree{}C], \(T_w = 25\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 3\)[s]}
+	\caption{Parametry: krok całkowania(0) \(h = 1\), \(T_b = 1200\) [\(0\)textdegree{}C], \(T_w = 25\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 3\)[s]}
 	\label{fig:krok-4}
 \end{figure}
 
-Dla bardzo małego kroku całkowania \(h\) \textit{nie widać} wyraźnej różnicy między prebiegiem temperatury
+Dla bardzo małego kroku całkowania \(h\) \textit{nie widać} wyraźnej różnicy między przebiegiem temperatury
 obliczonym za pomocą \textbf{metody Eulera}, a tym obliczonym za pomocą \textbf{ulepszonej metody Eulera}.
 Jest to widoczne na rysunkach \ref{fig:krok-1} oraz \ref{fig:krok-2}.\\
 Na rysunku \ref{fig:krok-3} widać wyraźną różnicę w przebiegu temperatury pręta przy kroku całkowania \(h = 0.1\).
@@ -259,13 +265,15 @@ w następnych próbach eksperymentalnych. \\
 Jednocześnie \textbf{ulepszona metodą Eulera} ze względu na większą dokładność wyników przy większym kroku całkowania
 będzie wykorzystywana do symulacji w następnych częściach tego projektu.
 
+\newpage
+
 \subsubsection{Przebieg czasowy temperatury pręta oraz oleju chłodzącego}
 
 W celu weryfikacji użyte zostały dane uzyskane z eksperymentów technicznych
 fizycznych, w których obserwowano tempraturę pręta oraz temperaturę oleju chłodzącego
 dla różnych ilości płynu po upływie określonego czasu \(t\) (2,3,4 lub 5 sekund).
 
-\begin{table}
+\begin{table}[H]
 	\begin{tabular}{ |c|c|c|c|c|c|c| }
 		\hline
 		 Nr pomiaru  & \( T_b(0) \) [\textdegree{}C] &  \( T_w(0) \) [\textdegree{}C] & \(M_w\) [kg] & \(t\)[s] &  \( T_b(t) \) [\textdegree{}C]  & \( T_w(t) \) [\textdegree{}C] \\
@@ -297,44 +305,88 @@ dla różnych ilości płynu po upływie określonego czasu \(t\) (2,3,4 lub 5 s
 
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{../assets/part1/przebieg-czasowy-1.png}
-	\caption{Parametry początkowe: \(T_b = 1200\) [\textdegree{}C], \(T_w = 25\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 3\)[s]}
+	\caption{Parametry: \(T_b(0) = 1200\) [\textdegree{}C], \(T_w(0) = 25\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 3\)[s]}
 
 	\includegraphics[width=\linewidth]{../assets/part1/przebieg-czasowy-2.png}
-	\caption{Parametry początkowe: \(T_b = 800\) [\textdegree{}C], \(T_w = 25\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 3\)[s]}
+	\caption{Parametry: \(T_b(0) = 800\) [\textdegree{}C], \(T_w(0) = 25\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 3\)[s]}
 \end{figure}
 
 
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{../assets/part1/przebieg-czasowy-3.png}
-	\caption{Parametry początkowe: \(T_b = 1100\) [\textdegree{}C], \(T_w = 70\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 3\)[s]}
+	\caption{Parametry: \(T_b(0) = 1100\) [\textdegree{}C], \(T_w(0) = 70\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 3\)[s]}
 
 	\includegraphics[width=\linewidth]{../assets/part1/przebieg-czasowy-4.png}
-	\caption{Parametry początkowe: \(T_b = 1200\) [\textdegree{}C], \(T_w = 25\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 5\)[s]}
+	\caption{Parametry: \(T_b(0) = 1200\) [\textdegree{}C], \(T_w(0) = 25\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 5\)[s]}
 \end{figure}
 
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{../assets/part1/przebieg-czasowy-5.png}
-	\caption{Parametry początkowe: \(T_b = 800\) [\textdegree{}C], \(T_w = 25\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 5\)[s]}
+	\caption{Parametry: \(T_b(0) = 800\) [\textdegree{}C], \(T_w(0) = 25\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 5\)[s]}
 
 	\includegraphics[width=\linewidth]{../assets/part1/przebieg-czasowy-6.png}
-	\caption{Parametry początkowe: \(T_b = 1100\) [\textdegree{}C], \(T_w = 70\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 2\)[s]}
+	\caption{Parametry: \(T_b(0) = 1100\) [\textdegree{}C], \(T_w(0) = 70\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 2\)[s]}
 \end{figure}
 
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{../assets/part1/przebieg-czasowy-7.png}
-	\caption{Parametry początkowe: \(T_b = 1100\) [\textdegree{}C], \(T_w = 70\)[\textdegree{}C], \(m_w = 5\)[kg], \(t = 2\)[s]}
+	\caption{Parametry: \(T_b(0) = 1100\) [\textdegree{}C], \(T_w(0) = 70\)[\textdegree{}C], \(m_w = 5\)[kg], \(t = 2\)[s]}
 
 	\includegraphics[width=\linewidth]{../assets/part1/przebieg-czasowy-8.png}
-	\caption{Parametry początkowe: \(T_b = 1100\) [\textdegree{}C], \(T_w = 70\)[\textdegree{}C], \(m_w = 10\)[kg], \(t = 2\)[s]}
+	\caption{Parametry: \(T_b(0) = 1100\) [\textdegree{}C], \(T_w(0) = 70\)[\textdegree{}C], \(m_w = 10\)[kg], \(t = 2\)[s]}
 \end{figure}
 
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{../assets/part1/przebieg-czasowy-9.png}
-	\caption{Parametry początkowe: \(T_b = 1100\) [\textdegree{}C], \(T_w = 70\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 4\)[s]}
+	\caption{Parametry: \(T_b(0) = 1100\) [\textdegree{}C], \(T_w(0) = 70\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 4\)[s]}
 
 	\includegraphics[width=\linewidth]{../assets/part1/przebieg-czasowy-10.png}
-	\caption{Parametry początkowe: \(T_b = 1100\) [\textdegree{}C], \(T_w = 70\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 5\)[s]}
+	\caption{Parametry: \(T_b(0) = 1100\) [\textdegree{}C], \(T_w(0) = 70\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 5\)[s]}
 \end{figure}
+
+Wyniki przedstawionych powyżej prób eksperymentalnych zostały przedstawione w tabeli podsumowującej
+wraz z wynikiem oczekiwanym z pomiarów eksperymentów technicznych fizycznym oraz obliczonym dla tej wartości
+błędem względnym.
+
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|c|}\hline%
+		Nr próby & oczekiwane \(T_b(t)\)[\textdegree{}C] & przybliżone \(T_b(t)\) [\textdegree{}C] & \(\delta T_b(t)\) \\\hline
+		\csvreader[no head, late after line=\\\hline]%
+		{../assets/part1/euler-wyniki.csv}{}%
+		{\thecsvrow&\csvcoli&\csvcoliii&\csvcoliv}%
+	\end{tabular}
+	\caption{Temperatury końcowe pręta przybliżone za pomocą metody prostej Eulera}
+\end{table}
+
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|c|}\hline%
+		Nr próby & oczekiwane \(T_w(t)\)[\textdegree{}C] & przybliżone \(T_w(t)\) [\textdegree{}C] & \(\delta T_w(t)\) \\\hline
+		\csvreader[no head, late after line=\\\hline]%
+		{../assets/part1/euler-wyniki.csv}{}%
+		{\thecsvrow&\csvcolii&\csvcolv&\csvcolvi}%
+	\end{tabular}
+	\caption{Temperatury końcowe oleju chłodzącego przybliżone za pomocą metody prostej Eulera}
+\end{table}
+
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|c|}\hline%
+		Nr próby & oczekiwane \(T_b(t)\)[\textdegree{}C] & przybliżone \(T_b(t)\) [\textdegree{}C] & \(\delta T_b(t)\) \\\hline
+		\csvreader[no head, late after line=\\\hline]%
+		{../assets/part1/ulepszony-euler-wyniki.csv}{}%
+		{\thecsvrow&\csvcoli&\csvcoliii&\csvcoliv}%
+	\end{tabular}
+	\caption{Temperatury końcowe pręta przybliżone za pomocą ulepszonej metody Eulera}
+\end{table}
+
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|c|}\hline%
+		Nr próby & oczekiwane \(T_w(t)\)[\textdegree{}C] & przybliżone \(T_w(t)\) [\textdegree{}C] & \(\delta T_w(t)\) \\\hline
+		\csvreader[no head, late after line=\\\hline]%
+		{../assets/part1/ulepszony-euler-wyniki.csv}{}%
+		{\thecsvrow&\csvcolii&\csvcolv&\csvcolvi}%
+	\end{tabular}
+	\caption{Temperatury końcowe oleju chłodzącego przybliżone za pomocą ulepszonej metody Eulera}
+\end{table}
 
 \section{Część 2}
 \subsection{Podsumowanie współczynników}
