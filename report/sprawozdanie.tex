@@ -156,11 +156,48 @@ Założenie to zakłada, że mamy wysoką wartość współczynnika przewodnictw
 zakładamy, że pomijamy to ograniczenie.
 
 \section{Część 1}
+\subsection{Wstęp}
 Część pierwsza niniejszego projektu zakłada zaprojektowanie
 oraz zaimplementowanie symulatora przebiegów czasowych temperatury pręta
 oraz oleju chłodzącego.
 Przyjęta została temperatura początkowa pręta \( T_b(0) = 1200 \)\textdegree{}C oraz początkową temperaturę
 oleju chłodzącego \( T_w(0) = 25 \)\textdegree{}C.
+Do znalezienia przybliżonego rozwiązania tego problemu zostanie użyta \textbf{metoda prosta Eulera}
+oraz \textbf{metoda ulepszona Eulera}.
+
+\subsubsection{Metoda prosta Eulera}
+Zakładając, że istnieje jedyne rozwiązanie problemu początkowego (Cauchy'ego):
+\begin{flalign*}
+	& y' = f(x, y) \\
+	& y(x_0) = y_0
+\end{flalign*}
+Możemy znaleźć przybliżone rozwiązanie metodą prostą Eulera. \\
+\\
+Rozwiązanie będzie szukane w przedziale \(<a,b>\), gdzie \( a = x_0\).
+Przedział ten jest dzielony na \(n\) części o długości \(h\). \\
+Wartości funkcji będącej rozwiązaniem danego zagadnienia będziemy liczyć ze wzoru:
+\begin{flalign*}
+	y_n = y_{n-1} + hf(x_{n-1}, y_{n-1})
+\end{flalign*}
+
+\subsubsection{Metoda ulepszona Eulera}
+Zakładając, że istnieje jedyne rozwiązanie problemu początkowego (Cauchy'ego):
+\begin{flalign*}
+	& y' = f(x, y) \\
+	& y(x_0) = y_0
+\end{flalign*}
+Możemy znaleźć przybliżone rozwiązanie metodą ulepszoną Eulera. \\
+\\
+Rozwiązanie będzie szukane w przedziale \(<a,b>\), gdzie \( a = x_0\).
+Przedział ten jest dzielony na \(n\) części o długości \(h\). \\
+Punkty podziału: \\
+\(x_n = a + ih \), gdzie \(i = 0,1, ..., n\). \\
+Wartości funkcji będącej rozwiązaniem danego zagadnienia będziemy liczyć ze wzoru:
+\begin{flalign*}
+	y_n = y_{n-1} + hf(x_{n-1} + \frac{h}{2}, y_{n-1} + \frac{h}{2}f(x_{n-1}, y_{n-1}))
+\end{flalign*}
+
+
 \subsection{Podsumowanie współczynników}
 Przebiegi czasowe temperatury pręta oraz temperatury oleju chłodzącego zostały przeprowadzone dla poniższych współczynników: \\
 \begin{flalign*}
@@ -176,9 +213,9 @@ Przebiegi czasowe temperatury pręta oraz temperatury oleju chłodzącego zosta�
 Ze względu na reużywalność niektórych funkcji programu w dalszych etapach projektu,
 kod źródłowy dla części pierwszej został podzielony na 3 pliki: \\
 Plik z funkcją sterującą z danymi parametrami oraz rysującą wykresy
-oraz funkcją implementującą \textit{funkcję Eulera}:
+oraz funkcją implementującą \textit{prostą metodę Eulera}:
 \lstinputlisting[language=MatLab]{../src/part1.m}
-Ulepszona funkcja Eulera:
+Ulepszona metoda Eulera:
 \lstinputlisting[language=MatLab]{../src/improvedEuler.m}
 Funkcja wykonująca całkowanie zadanego równania stanu
 \lstinputlisting[language=MatLab]{../src/tempModel.m}
@@ -210,19 +247,53 @@ Krok całkowania \(h\) został dobrany metodą eksperymentalną z przedziału: 0
 \end{figure}
 
 Dla bardzo małego kroku całkowania \(h\) \textit{nie widać} wyraźnej różnicy między prebiegiem temperatury
-obliczonym za pomocą \textbf{funkcji Eulera}, a tym obliczonym za pomocą \textbf{ulepszonej funkcji Eulera}.
+obliczonym za pomocą \textbf{metody Eulera}, a tym obliczonym za pomocą \textbf{ulepszonej metody Eulera}.
 Jest to widoczne na rysunkach \ref{fig:krok-1} oraz \ref{fig:krok-2}.\\
 Na rysunku \ref{fig:krok-3} widać wyraźną różnicę w przebiegu temperatury pręta przy kroku całkowania \(h = 0.1\).
-Wykres przebiegu temperatury obliczony za pomocą \textbf{ulepszonej funkcji Eulera} jest bardziej zbliżony,
+Wykres przebiegu temperatury obliczony za pomocą \textbf{ulepszonej metody Eulera} jest bardziej zbliżony,
 do tego, do którego został użyty mniejszy krok całowania w poprzednich próbach eksperymentalnych. \\
 Natomiast krok całkowania \(h = 1\) przedstawiony na rysunku \ref{fig:krok-4} okazał się zbyt duży,
 aby przebieg temperatury obliczony przez dowolną z tych dwóch funkcji prezentował sensowne dane. \\
 Za pomocą tego eksperymentu został wybrany krok całkowania \(h = 0.1\) i właśnie taki będzie używany
 w następnych próbach eksperymentalnych. \\
-Jednocześnie \textbf{ulepszona funkcja Eulera} ze względu na większą dokładność wyników przy większym kroku całkowania
+Jednocześnie \textbf{ulepszona metodą Eulera} ze względu na większą dokładność wyników przy większym kroku całkowania
 będzie wykorzystywana do symulacji w następnych częściach tego projektu.
 
 \subsubsection{Przebieg czasowy temperatury pręta oraz oleju chłodzącego}
+
+W celu weryfikacji użyte zostały dane uzyskane z eksperymentów technicznych
+fizycznych, w których obserwowano tempraturę pręta oraz temperaturę oleju chłodzącego
+dla różnych ilości płynu po upływie określonego czasu \(t\) (2,3,4 lub 5 sekund).
+
+\begin{table}
+	\begin{tabular}{ |c|c|c|c|c|c|c| }
+		\hline
+		 Nr pomiaru  & \( T_b(0) \) [\textdegree{}C] &  \( T_w(0) \) [\textdegree{}C] & \(M_w\) [kg] & \(t\)[s] &  \( T_b(t) \) [\textdegree{}C]  & \( T_w(t) \) [\textdegree{}C] \\
+		\hline
+		 1  & 1200 & 25 & 2.5 & 3 & 107.7 & 105.1  \\
+		\hline
+		 2  & 800 & 25 & 2.5 & 3 & 79.1 & 78.0  \\
+		\hline
+		 3  & 1100 & 70 & 2.5 & 3 & 142.1 & 139.1  \\
+		\hline
+		 4  & 1200 & 25 & 2.5 & 5 & 105.7 & 105.5  \\
+		\hline
+		 5  & 800 & 25 & 2.5 & 5 & 78.2 & 78.1  \\
+		\hline
+		 6  & 1100 & 70 & 2.5 & 2 & 150.1 & 138.2  \\
+		\hline
+		 7  & 1100 & 70 & 5 & 2 & 116.6 & 105.1  \\
+		\hline
+		 8  & 1100 & 70 & 10 & 2 & 99.1 & 88.1  \\
+		\hline
+		 9  & 1100 & 70 & 2.5 & 4 & 141.2 & 139.8  \\
+		\hline
+		 10  & 1100 & 70 & 2.5 & 5 & 140.9 & 140.1  \\
+		\hline
+	\end{tabular}
+	\caption{Pomiary eksperymentowe.}
+\end{table}
+
 
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{../assets/przebieg-czasowy-1.png}
