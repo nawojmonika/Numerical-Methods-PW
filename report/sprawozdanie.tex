@@ -198,6 +198,20 @@ Wartości funkcji będącej rozwiązaniem danego zagadnienia będziemy liczyć z
 	y_n = y_{n-1} + hf(x_{n-1} + \frac{h}{2}, y_{n-1} + \frac{h}{2}f(x_{n-1}, y_{n-1}))
 \end{flalign*}
 
+\subsubsection{Błąd względny}
+Dużymi literami \(A, B, C, ...\) oznaczone są liczby dokładne,
+a małymi \(a, b, b, ...\) przybliżone wartości tych liczb.
+
+\textbf{Błąd bezwzględny} liczby przybliżonej stanowi wartość bezwględną różnicy pomiędzy liczbą dokładną,
+a jej przybliżeniem.
+\begin{flalign*}
+	\Delta a = |A - a|
+\end{flalign*}
+
+\textbf{Błąd względny} stanowi stosunek błędu bezwględnego do wartości liczby przybliżonej dla wartości przybliżonej różnej od zera..
+\begin{flalign*}
+	\delta a = \frac{\delta a}{| a |}
+\end{flalign*}
 
 \subsection{Podsumowanie współczynników}
 Przebiegi czasowe temperatury pręta oraz temperatury oleju chłodzącego zostały przeprowadzone dla poniższych współczynników: \\
@@ -262,8 +276,8 @@ Natomiast krok całkowania \(h = 1\) przedstawiony na rysunku \ref{fig:krok-4} o
 aby przebieg temperatury obliczony przez dowolną z tych dwóch funkcji prezentował sensowne dane. \\
 Za pomocą tego eksperymentu został wybrany krok całkowania \(h = 0.1\) i właśnie taki będzie używany
 w następnych próbach eksperymentalnych. \\
-Jednocześnie \textbf{ulepszona metodą Eulera} ze względu na większą dokładność wyników przy większym kroku całkowania
-będzie wykorzystywana do symulacji w następnych częściach tego projektu.
+Warto również zauważyć, że \textbf{ulepszona metoda Eulera} uzyskuje wyniki dokładniejsze
+przy większym kroku całkowania niż metoda prosta Eulera.
 
 \newpage
 
@@ -356,6 +370,7 @@ błędem względnym.
 		{\thecsvrow&\csvcoli&\csvcoliii&\csvcoliv}%
 	\end{tabular}
 	\caption{Temperatury końcowe pręta przybliżone za pomocą metody prostej Eulera}
+	\label{tab:euler-1}
 \end{table}
 
 \begin{table}[H]
@@ -366,6 +381,7 @@ błędem względnym.
 		{\thecsvrow&\csvcolii&\csvcolv&\csvcolvi}%
 	\end{tabular}
 	\caption{Temperatury końcowe oleju chłodzącego przybliżone za pomocą metody prostej Eulera}
+	\label{tab:euler-2}
 \end{table}
 
 \begin{table}[H]
@@ -376,6 +392,7 @@ błędem względnym.
 		{\thecsvrow&\csvcoli&\csvcoliii&\csvcoliv}%
 	\end{tabular}
 	\caption{Temperatury końcowe pręta przybliżone za pomocą ulepszonej metody Eulera}
+	\label{tab:impoved-euler-1}
 \end{table}
 
 \begin{table}[H]
@@ -386,7 +403,30 @@ błędem względnym.
 		{\thecsvrow&\csvcolii&\csvcolv&\csvcolvi}%
 	\end{tabular}
 	\caption{Temperatury końcowe oleju chłodzącego przybliżone za pomocą ulepszonej metody Eulera}
+	\label{tab:impoved-euler-2}
 \end{table}
+
+Przedstawione w tabelach powyżej wartości błędów bezwględnych wynoszą wartość bliską zera,
+co wskazuje na poprawność symulacji przebiegu czasowego temperatury pręta oraz oleju chłodzącego. \\
+Błędy te mogą wynikać z kilku przyczyn. \\
+Jedną z nich jest wykorzystanie danych przybliżonych do 4 miejsca po przecinku w przypadku przeprowadzoncyh
+prób, oraz danych przybliżonych do 1 miejsca po przecinku w przypadku danych z eksperymentu fizycznego.
+Dodatkowo możemy wziąć pod uwagę nieścisłości związane z dokładnością pomiarów eksperymentu fizycznego.
+Oczywiście musimy również brać pod uwagę dokładność algorytmu, który został wykorzystany do symulacji. \\
+\\
+Błąd względny dla temperatury oleju chłodzącego \(T_w(t)\) nie różni się znacznie dla wartości przybliżonych
+\textit{metodą prostą Eulera} (Tabela \ref{tab:euler-2}), a tych obliczonych \textit{ulepszoną metodą Eulera}
+(Tabela \ref{tab:impoved-euler-2}). \\
+Natomiast patrząc na różnice wartości błędu względnego dla temperatury pręta \(T_b(t)\) widać,
+że błąd względny wartości przybliżonej \textbf{ulepszoną metodą Eulera} (Tabela \ref{tab:impoved-euler-1}) jest znacznie mniejszy
+od błędu względnego wartości przybliżonej \textbf{metodą prostą Eulera} (Tabela \ref{tab:euler-1}).
+\subsection{Wnioski}
+
+Zaprezentowane poniżej eskperymenty dowiodły, iż symulacja przebiegu czasowego temperatury pręta
+oraz oleju chłodzącego przebiega poprawnie. \\
+Dodatkowo \textbf{ulepszona metoda Eulera} przy większym kroku całkowania przybliża wartości
+z mniejszym błędem względnym niż \textbf{metoda prosta Eulera}.
+Z tego względu metoda ulepszona będzie stosowana w następnych częściach projektu.
 
 \section{Część 2}
 \subsection{Podsumowanie współczynników}
