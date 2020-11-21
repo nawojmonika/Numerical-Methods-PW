@@ -17,7 +17,7 @@ function part1
             Tw(1) ]; % [C]
         x = 0:stepH((i)):t(1);
         h(1:length(x)) = 160; % [J / s * m^2]
-        ye = euler(x, y, stepH(i), h, A, mb, mw(1), cb, cw);
+        ye = myEuler(x, y, stepH(i), h, A, mb, mw(1), cb, cw);
         yie = improvedEuler(x, y, stepH(i), h, A, mb, mw(1), cb, cw);
 
         fig=figure('Renderer', 'painters', 'Position', chart_size);
@@ -26,7 +26,7 @@ function part1
         title('Przebiegi czasowe temperatury preta oraz oleju chlodzacego');
         xlabel('t [s]');
         ylabel(['T [' char(176) 'C]']);
-        legend('T_b obliczona funkcja Eulera', 'T_w obliczona funkcja Eulera', 'T_b obliczona  ulepszona funkcja Eulera','T_w obliczona ulepszona funkcja Eulera');
+        legend('T_b przyblizona metoda Eulera', 'T_w przyblizona metoda Eulera', 'T_b obliczona  ulepszona funkcja Eulera','T_w obliczona ulepszona funkcja Eulera');
 
         saveas(fig,sprintf('../assets/part1/krok-h-%d', i), 'png');
         close;
@@ -46,7 +46,7 @@ function part1
                Tw(j) ]; % [C]
         x = 0:step:t(j);
         h(1:length(x)) = 160; % [J / s * m^2]
-        ye = euler(x, y, step, h, A, mb, mw(j), cb, cw);
+        ye = myEuler(x, y, step, h, A, mb, mw(j), cb, cw);
         yie = improvedEuler(x, y, step, h, A, mb, mw(j), cb, cw);
 
         fig=figure('Renderer', 'painters', 'Position', chart_size);
@@ -55,7 +55,7 @@ function part1
         title('Przebiegi czasowe temperatury preta oraz oleju chlodzacego');
         xlabel('t [s]');
         ylabel(['T [' char(176) 'C]']);
-        legend('T_b obliczona funkcja Eulera', 'T_w obliczona funkcja Eulera', 'T_b obliczona  ulepszona funkcja Eulera','T_w obliczona ulepszona funkcja Eulera');
+        legend('T_b przyblizona metoda Eulera', 'T_w przyblizona metoda Eulera', 'T_b przyblizona ulepszona metoda Eulera','T_w przyblizona ulepszona metoda Eulera');
 
         saveas(fig,sprintf('../assets/part1/przebieg-czasowy-%d', j), 'png');
         close;
@@ -76,11 +76,4 @@ function part1
         end_values_improved_Euler = [Tbt(j), Twt(j), Tbtyie, TbtyieRE, Twtyie, TwtyieRE];
         writematrix(end_values_improved_Euler,'../assets/part1/ulepszony-euler-wyniki.csv','WriteMode','append');
     end
-end
-
-function yie = euler(t, y, step, conduct, A, mb, mw, cb, cw)
-    for i = 1:length(t)-1
-        y(:, i+1) = y(:, i) + step * tempModel(y(:,i), conduct(i), A, mb, mw, cb, cw);
-    end
-    yie = y;
 end
