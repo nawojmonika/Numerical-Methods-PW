@@ -217,12 +217,12 @@ a jej przybliżeniem.
 \subsection{Podsumowanie współczynników}
 Przebiegi czasowe temperatury pręta oraz temperatury oleju chłodzącego zostały przeprowadzone dla poniższych współczynników: \\
 \begin{flalign*}
-	& h = 160 [\frac{J}{s * m^2}] \\
-	& A = 0.0109 [m^2] \\
-	& m_b = 0.2 [kg] \\
-	& m_w = 2.5 [kg] \\
-	& c_b = 3.85 [\frac{J}{kg * K}] \\
-	& cw = 4.1813 [\frac{J}{kg * K}] \\
+	& h = 160 \quad [\frac{J}{s \cdot m^2}] \\
+	& A = 0.0109 \quad [m^2] \\
+	& m_b = 0.2 \quad [kg] \\
+	& m_w = 2.5 \quad [kg] \\
+	& c_b = 3.85 \quad [\frac{J}{kg \cdot K}] \\
+	& cw = 4.1813 \quad [\frac{J}{kg \cdot K}] \\
 \end{flalign*}
 
 \subsection{Kod źródłowy programu}
@@ -505,15 +505,36 @@ gdzie \(a_i\) dla \(i=0,1,2, \dots, m\) to współczynniki rzeczywiste wielomian
 Bazą takiego wielomianu są funkcje: \(\{1,x,x^2, \dots, x^m\}\). \\
 Budujemy macierz \(M\) dla tej bazy:
 \begin{flalign*}
-	M = \begin{bmatrix*}
+	M =
+	\begin{bmatrix*}
 		1 & x_0 & \dots & x_0^m \\
 		1 & x_1 & \dots & x_1^m \\
 		1 & \dots & \dots & \dots \\
 		1 & x_n & \dots & x_n^m
 		\end{bmatrix*}
 \end{flalign*}
-Aby znaleźć współczynniki \(a_i\) dla \(i=0,1,2, \dots, m\), należy rozwiązać układ \(M^{TM*A=M^T*Y}\)
-z powyższą macierzą. \\
+Aby znaleźć współczynniki \(a_i\) dla \(i=0,1,2, \dots, m\), z powyższą macierzą należy rozwiązać układ:
+\begin{flalign*}
+	M^T M \cdot A  = M^T \cdot Y
+\end{flalign*}
+gdzie:
+\begin{flalign*}
+	Y =
+	\begin{bmatrix*}
+		y_1 \\
+		y_2 \\
+		\dots \\
+		y_n
+	\end{bmatrix*}
+	A =
+	\begin{bmatrix*}
+		a_0 \\
+		a_1 \\
+		\dots \\
+		a_m
+	\end{bmatrix*}
+\end{flalign*}
+
 \subsubsection{Błąd aproksymacji}
 Dążymy do tego, aby funkcja aproksymująca była jak najbliższa funkcji aproksymowanej,
 a więc aby \textit{błąd aproksymacji} był jak najmniejszy. \\
@@ -643,8 +664,39 @@ podprzedziałów o długości \(2h\), w każdym z nich:
 	\int_{x_i}^{x_{i+2}} f(x)dx \cong \frac{h}{3} (f(x_i) + 4f(x_{i+1}) + f(x_{i+2}))
 \end{flalign*}
 \subsection{Podsumowanie współczynników}
+\begin{flalign*}
+	& h \text{ aproksymowane oraz interpolowane (ruchome) } \quad [\frac{J}{s \cdot m^2}] \\
+	& A = 0.0109 \quad [m^2] \\
+	& m_b = 0.2 \quad [kg] \\
+	& m_w = 2.5 \quad [kg] \\
+	& c_b = 3.85 \quad [\frac{J}{kg \cdot K}] \\
+	& cw = 4.1813 \quad [\frac{J}{kg \cdot K}] \\
+	& T_b(0) = 1200 \quad \text{[\textdegree{}C]} \\
+	& T_w(0) = 25 \quad \text{[\textdegree{}C]} \\
+\end{flalign*}
 \subsection{Kod źródłowy programu}
+\subsubsection{Podzadanie 1}
+\lstinputlisting[language=MatLab, caption=Funkcja sterująca z danymi parametrami oraz rysująca wykresy]{../src/part2_1.m}
+
+\lstinputlisting[language=MatLab, caption=Aproksymacja wielomianowa metodą najmniejszych kwadratów]{../src/approx.m}
+
+\lstinputlisting[language=MatLab, caption=Błąd aproksymacji]{../src/approxError.m}
+
+\lstinputlisting[language=MatLab, caption=Interpolacja funkcjami sklejanymi 3-iego stopnia]{../src/spline.m}
+
+\subsubsection{Podzadanie 2}
+\lstinputlisting[language=MatLab, caption=Funkcja sterująca z danymi parametrami oraz rysująca wykresy]{../src/part2_2.m}
+
+\lstinputlisting[language=MatLab, caption=Funkcja licząca średnią różnicę przebiegów charakterystyk współczynników różnicy temperatur]{../src/avgFactorDiff.m}
+
+\lstinputlisting[language=MatLab, caption=Metoda złożona parabol]{../src/simpsonIntegral.m}
+
+
+\subsubsection{Podzadanie 3}
+\lstinputlisting[language=MatLab, caption=Funkcja sterująca z danymi parametrami oraz rysująca wykresy]{../src/part2_3.m}
+
 \subsection{Interpretacja wyników}
+\subsection{Wnioski}
 \section{Część 3}
 \subsection{Wstęp}
 \subsection{Podsumowanie współczynników}
