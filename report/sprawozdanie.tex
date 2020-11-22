@@ -46,6 +46,7 @@
 \usepackage{polski}
 \usepackage[polish]{babel}
 \usepackage{csvsimple}
+\usepackage{mathtools}
 
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
@@ -192,15 +193,15 @@ Możemy znaleźć przybliżone rozwiązanie metodą ulepszoną Eulera. \\
 Rozwiązanie będzie szukane w przedziale \(<a,b>\), gdzie \( a = x_0\).
 Przedział ten jest dzielony na \(n\) części o długości \(h\). \\
 Punkty podziału: \\
-\(x_n = a + ih \), gdzie \(i = 0,1, ..., n\). \\
+\(x_n = a + ih \), gdzie \(i = 0,1, \dots, n\). \\
 Wartości funkcji będącej rozwiązaniem danego zagadnienia będziemy liczyć ze wzoru:
 \begin{flalign*}
 	y_n = y_{n-1} + hf(x_{n-1} + \frac{h}{2}, y_{n-1} + \frac{h}{2}f(x_{n-1}, y_{n-1}))
 \end{flalign*}
 
 \subsubsection{Błąd względny}
-Dużymi literami \(A, B, C, ...\) oznaczone są liczby dokładne,
-a małymi \(a, b, b, ...\) przybliżone wartości tych liczb.
+Dużymi literami \(A, B, C, \dots\) oznaczone są liczby dokładne,
+a małymi \(a, b, b, \dots\) przybliżone wartości tych liczb.
 
 \textbf{Błąd bezwzględny} liczby przybliżonej stanowi wartość bezwględną różnicy pomiędzy liczbą dokładną,
 a jej przybliżeniem.
@@ -226,9 +227,12 @@ Przebiegi czasowe temperatury pręta oraz temperatury oleju chłodzącego zosta�
 
 \subsection{Kod źródłowy programu}
 Ze względu na reużywalność niektórych funkcji programu w dalszych etapach projektu,
-kod źródłowy dla części pierwszej został podzielony na 4 pliki: \\
-\lstinputlisting[language=MatLab, caption=Plik z funkcją sterującą z danymi parametrami oraz rysującą wykresy
-oraz funkcją implementującą \textit{prostą metodę Eulera}]{../src/part1.m}
+kod źródłowy dla części pierwszej został podzielony na 5 plików: \\
+\lstinputlisting[language=MatLab, caption=Funkcja sterująca z danymi parametrami oraz rysująca wykresy]{../src/part1.m}
+
+\lstinputlisting[language=MatLab, caption=Metoda prosta Eulera]{../src/myEuler.m}
+
+\newpage
 
 \lstinputlisting[language=MatLab, caption=Ulepszona metoda Eulera]{../src/improvedEuler.m}
 
@@ -421,23 +425,234 @@ Natomiast patrząc na różnice wartości błędu względnego dla temperatury pr
 od błędu względnego wartości przybliżonej \textbf{metodą prostą Eulera} (Tabela \ref{tab:euler-1}).
 \subsection{Wnioski}
 
-Zaprezentowane poniżej eskperymenty dowiodły, iż symulacja przebiegu czasowego temperatury pręta
+Zaprezentowane poniżej eksperymenty dowiodły, iż symulacja przebiegu czasowego temperatury pręta
 oraz oleju chłodzącego przebiega poprawnie. \\
 Dodatkowo \textbf{ulepszona metoda Eulera} przy większym kroku całkowania przybliża wartości
 z mniejszym błędem względnym niż \textbf{metoda prosta Eulera}.
 Z tego względu metoda ulepszona będzie stosowana w następnych częściach projektu.
 
+\newpage
+
 \section{Część 2}
+\subsection{Wstęp}
+W części drugiej przyjmujemy, że współczynnik przewodnictwa cieplnego \(h\) między prętem a olejem chłodzącym
+jest nieliniowy i zależny od różnicy temperatur.
+Współczynnik ten jest opisany poniższymi zależnościami oraz tabelą z danymi pomiarowymi.
+\begin{flalign*}
+	h = f_h(\Delta T) = f_h(T_b - Tw)
+\end{flalign*}
+
+\begin{table}[H]
+	\begin{tabular}{ |c|c|c|c|c|c|c|c|c|c|c|c|c| }
+		\hline
+		\( \Delta T \) [\textdegree{}C] &  -1500 & -1000 & -300 & -50 & -1 & 1 & 20 & 50 & 200 & 400 & 1000 & 2000 \\
+		\hline
+		\(h[W * m^{-2}]\) & 178 & 176 & 168 & 161 & 160 & 160 & 160.2 & 161 & 165 & 168 & 174 & 179 \\
+		\hline
+	\end{tabular}
+	\caption{Dane pomiarowe współczynnika przewodnictwa.}
+\end{table}
+
+Dane te będą aproksymowane oraz interpolowane, aby można było je wykorzystać w symulacji. \\
+Przyjęta została temperatura początkowa pręta \(T_b(0)=1200\)\textdegree{}C,
+a temperatura początkowa oleju chłodzącego \(T_w(0)=25\)\textdegree{}C.
+\subsubsection{Podzadanie 1}
+W zakresie podzadania pierwszego należało zaimplementować dwa algorytmy pozwalające znaleźć przybliżenie
+współczynnika przewodnictwa cieplnego \(h\) na podstawie danych z tabeli,
+a następnie wykorzystać te przybliżenia w symulacji. \\
+Zostaną zaimplementowane następujące algorytmy:
+\begin{itemize}
+\item algorytm aproksymacji wielomianowej metodą najmniejszych kwadratów
+\item algorytm interpolacji wykorzystujący funkcje sklejane trzeciego stopnia
+\end{itemize}
+
+\subsubsection{Podzadanie 2}
+W podzadaniu drugim należy porównać przebiegi krzywej reprezentującej współczynnik
+przewodnictwa cieplnego uzyskanej z obu metod z poprzedniego podzadania (aproksymacji oraz interpolacji).
+Różnicę tą należy przedstawić na jednym wykresie. \\
+Dodatkowo należy obliczyć średnią różnicę przebiegów charakterystyk współczynników różnicy temperatur
+\(\Delta T\) odpowiadającym zakresowi z tabeli za pomocą poniższego wzoru:
+\begin{flalign*}
+	e_{avg} = \frac{1}{3500} \int_{-1500}^{2000} |h_{aproksymowane} - h_{interpolowane}|d(\Delta T)
+\end{flalign*}
+Jest to całka wartości bezwzględnej różnicy współczynników wykonana względem \(\Delta T\)
+w przedziale -1500 do 2000.
+Całka ta zostanie wyznaczona za pomocą metody parabol.
+
+\subsubsection{Podzadanie 3}
+Podzadanie 3 polega na sprawdzeniu wpływu modelu przybliżającego charakterystykę współczynnika \(h\)
+na wyniki symulacji rozkładu temperatury pręta oraz oleju chłodzącego.
+
+\subsubsection{Aproksymacja wielomianowa metodą najmniejszych kwadratów}
+\textbf{Aproksymacja} służy do znajdowania przybliżonych wartości funkcji \(f(x)\) w dowolnym
+punkcie przedziału \(<a, b>\).
+Funkcja aproksymacyjna różni się od funkcji interpolacyjnej tym, że nie wymagamy od funkcji aproksymacyjnej
+aby pokrywała się w pewnych punktach z funkcją aproksymowaną.
+Jedynym wymaganiem jest aby funkcja aproksymacyjna była \textit{bliska} funkcji aproksymowanej. \\
+Załóżmy, że z doświadczeń lub pomiarów określiliśmy w n+1 różnych punktach:
+\begin{flalign*}
+	x_0,x_1,x_2, \dots, x_n
+\end{flalign*}
+z przedziału \(<a, b>\) wartości funkcji \(y = f(x)\) i te wartości oznaczamy przez:
+\begin{flalign*}
+	y_0 = f(x_0), y_1 = f(x_1), y_2 = f(x_2), \dots, y_n = f(x_n),
+\end{flalign*}
+Rozpatrywane będą funkcje  aproksymujące w postaci wielomianów algebraicznych:
+\begin{flalign*}
+	W_m(x) = a_0 + a_1 x + a_2 x^2 + \dots + a_{m-1} x^{m-1} + a_m x^m
+\end{flalign*}
+gdzie \(a_i\) dla \(i=0,1,2, \dots, m\) to współczynniki rzeczywiste wielomianu, które trzeba znaleźć. \\
+Bazą takiego wielomianu są funkcje: \(\{1,x,x^2, \dots, x^m\}\). \\
+Budujemy macierz \(M\) dla tej bazy:
+\begin{flalign*}
+	M = \begin{bmatrix*}
+		1 & x_0 & \dots & x_0^m \\
+		1 & x_1 & \dots & x_1^m \\
+		1 & \dots & \dots & \dots \\
+		1 & x_n & \dots & x_n^m
+		\end{bmatrix*}
+\end{flalign*}
+Aby znaleźć współczynniki \(a_i\) dla \(i=0,1,2, \dots, m\), należy rozwiązać układ \(M^{TM*A=M^T*Y}\)
+z powyższą macierzą. \\
+\subsubsection{Błąd aproksymacji}
+Dążymy do tego, aby funkcja aproksymująca była jak najbliższa funkcji aproksymowanej,
+a więc aby \textit{błąd aproksymacji} był jak najmniejszy. \\
+Do obliczenia błędu aproksymacji zastosujemy wzór na średni błąd przypadający na jeden węzeł:
+\begin{flalign*}
+	bl = \sqrt[]{\frac{\sum_{i=0}^{n}(y_i - F(x_i))^2 }{n+1}}
+\end{flalign*}
+Pod pierwiastkiem w liczniku znajduje się suma kwadratów odchyleń, którą minimalizowaliśmy,
+natomiast w mianowniku jest ilość węzłów.
+
+\newpage
+
+\subsubsection{Interpolacja wykorzystująca funkcje sklejane trzeciego stopnia}
+\textbf{Interpolacja} służy do znajdowania przybliżonych wartości funkcji \(f(x)\)
+w dowolnym punkcie przedziału \(<a,b>\), nawet w przypadku gdy znane jest tylko
+kilka wartości funkcji \(f(x)\) w tym przedziale. \\
+Załóżmy, że z doświadczeń lub pomiarów określiliśmy w n+1 różnych punktach:
+\begin{flalign*}
+	x_0,x_1,x_2, \dots, x_n
+\end{flalign*}
+z przedziału \(<a, b>\) wartości funkcji \(y = f(x)\) i te wartości oznaczamy przez:
+\begin{flalign*}
+	y_0 = f(x_0), y_1 = f(x_1), y_2 = f(x_2), \dots, y_n = f(x_n),
+\end{flalign*}
+Zadaniem interpolacji jest wyznaczenie \textbf{funkcji interpolacyjnej} \(F(x)\),
+określonej w przedziale \(<a,b>\), która w \textbf{węzłach interpolacji} \(x_0,x_1,x_2,\dots,x_n\)
+przyjmuje wartości \textit{funkcji interpolowanej} \(f(x)\), a w punktach poza węzłami
+przybliża wartość tej funkcji. \\
+Zatem dla punktów \(x_i\) dla \(i = 0,1,2,\dots, n\) w przedziale \(<a,b>\) funkcja interpolacyjna
+\(F(x)\) musi spełniać \(n+1\) warunków:
+\begin{flalign*}
+	F(x_i) = y_i = f(x_i)
+\end{flalign*}
+dla \(i=0,1,2,\dots, n\) \\
+\\
+Stosując do interpolacji wielomian interpolacyjny nie możemy narzucać stopnia wielomianu,
+ponieważ ten zależy od ilości węzłów. \\
+Natomiast stopień funkcji sklejanej (tzw.\textit{splajnu}) nie będzie zależał od ilości węzłów. \\
+Rozpatrujemy przedział \(<a,b>\) i dzielimy go na \(n\) części,
+czyli \(n\) podprzedziałów o długości:
+\begin{flalign*}
+	h = \frac{b-a}{n}
+\end{flalign*}
+Otrzymamy wtedy węzły równoległe: \(x_i = a + i * h\) dla \(i = 0,1, \dots, n\). \\
+\\
+\textbf{Funkcja sklejana 3-iego stopnia} jest to funkcja, która na każdym podprzedziale
+jest \textit{wielomianem 3-iego stopnia} "posklejana" w taki sposób, aby była ciągła
+i miała pierwszą i drugą pochodną ciągłą na przedziale \(<a,b>\). \\
+\\
+Aby precyzyjnie określić funkcję sklejaną 3-iego stopnia \(S_3(x)\) na przedziale \(<a,b>\)
+należy na początku określić bazę splajnów 3-iego stopnia dla węzłów równoodległych. \\
+Jedna funkcja bazowa jest podana za pomocą wzoru:
+\begin{flalign*}
+	\Phi_i(x) = \frac{1}{h^3}
+	\begin{cases}
+		(x-x_{i-2})^3 & \quad \text{dla } x \in <x_{i-2}, x_{i-1}>\\
+		(x-x_{i-2})^3 - 4(x - x_{x_i-1})^3 & \quad \text{dla } x \in <x_{i-1}, x_{i}>\\
+		(x_{i+2} - x)^3 - 4(x_{x_i+1} - x)^3 & \quad \text{dla } x \in <x_{i}, x_{i + 1}>\\
+		(x_{i+2} - x)^3 & \quad \text{dla } x \in <x_{i+1}, x_{i + 2}>\\
+		0 & \quad \text{dla } x \in R - <x_{i-2}, x_{i + 2}>\\
+	\end{cases}
+\end{flalign*}
+
+\newpage
+
+Powyższe wymagania muszą zostać spełnione tzn.:
+\begin{itemize}
+\item musi być wielomianem 3-iego stopnia na każdym podprzedziale
+\item mieć pierwszą i drugą pochodną ciągłą na przedziale \(<a,b>\)
+\item i-ta funkcja bazowa oznaczona jako \(\Phi_i(x) \) ma w i-tym węźle pochodną ciągłą na przedziale \(<a, b>\)
+oraz \textit{maksimum} równe 4.
+\item dodatkowo w węzłach obok ma wartość 1, a w węzłach o numerach \(i-2\) i \(i+2\) ma wartość 0
+\end{itemize}
+
+Po zastosowaniu funkcji sklejanej \(S_3(x)\) do interpolacji funkcji \(f(x)\) w przedziale \(<a,b>\).
+otrzymujemy ze związków \(n+1\) równań, dla współczynników \(n+3\):
+\begin{flalign*}
+	S_3(x) = c_{-1} \Phi_{-1}(x) + c_0 \Phi_0(x) + c_1 \Phi_1(x) + \dots + c_n \Phi_n(x) + c_{n+1} \Phi_{n+1}(x)
+\end{flalign*}
+Nasz układ ma zatem dwa stopnie swobody i aby jednoznacznie wyznaczyć \(S_3'(x)\)
+w punktach \(a\) oraz \(b\) należy zadać współczynniki kierunkowe stycznych
+pod jakimi funkcja interpolacyjna ma startować z punktu \(a\) w prawo i jak ma
+przechodzić do punktu \(b\) z lewej strony. \\
+Dodatkowe warunki:
+\begin{flalign*}
+	S_3'(a^+) = \alpha, S_3'(b^-) = \beta
+\end{flalign*}
+
+Z warunków oraz własności funkcji bazowych i ich pochodnych otrzymujemy następujący układ równań:
+\begin{flalign*}
+	& -c_{-1} + c_1 = \frac{h}{3} \alpha \\
+	& -c_{n-1} + c_{n+1} = \frac{h}{3} \beta
+\end{flalign*}
+
+Po rozwiązaniu powyższego układu równań i wyliczeniu współczynników \(c_{c-1}, c_{n+1}\),
+wstawiamy je do następującego wzoru:
+\begin{flalign*}
+	& c_{i-1} + 4c_i + c_{i+1} = y_i \quad i=0,1,\dots,n
+\end{flalign*}
+Otrzymujemy wówczas następujący układ \(n+1\) równań liniowych z \(n+1\) niewiadomymi
+\(c_0, c_1, \dots, c_n\):
+\begin{flalign*}
+	& 4c_0 + 2c_1 = y_0 + \frac{h}{3} \alpha \\
+	& c_0 + 4c_1 + c_2 = y_1 \\
+	& c_1 + 4c_2 + c_3 = y_2 \\
+	&  \dots \\
+	& c_{n-2} + 4c_{n-1} + c_n = y_{n-1} \\
+	& 2c_{n-1} + 4c_n = y_n - \frac{h}{3} \beta
+\end{flalign*}
+
+Układ ten ma zawsze \textbf{jedno} rozwiązanie na \(c_0, c_1, \dots, c_n\), \\
+pozostałe 2 współczynniki obliczamy z następujących wzorów:
+\begin{flalign*}
+	& c_{-1} = c_1 - \frac{h}{3} \alpha \\
+	& c_{n+1} = c_{n-1} + \frac{h}{3} \beta
+\end{flalign*}
+
+\subsubsection{Wzór złożony parabol (Simpsona)}
+Przedział \(<a,b>\) dzielimy na \(m\) części (\(m\) musi być \textbf{parzyste}):
+\begin{flalign*}
+	h = \frac{b-a}{m}, x_k = a + kh, \quad \text{gdzie } k=0,1,\dots,m
+\end{flalign*}
+Otrzymujemy \(m\) podprzedziałów o długości \(h\), inaczej \(m/2\)
+podprzedziałów o długości \(2h\), w każdym z nich:
+\([x_i, x_{i+2}]\), gdzie \(i=0,1,\dots,m-2\) stosujemy wzór prosty parabol:
+\begin{flalign*}
+	\int_{x_i}^{x_{i+2}} f(x)dx \cong \frac{h}{3} (f(x_i) + 4f(x_{i+1}) + f(x_{i+2}))
+\end{flalign*}
 \subsection{Podsumowanie współczynników}
 \subsection{Kod źródłowy programu}
 \subsection{Interpretacja wyników}
 \section{Część 3}
+\subsection{Wstęp}
 \subsection{Podsumowanie współczynników}
 \subsection{Kod źródłowy programu}
 \subsection{Interpretacja wyników}
 \section{Część 4}
+\subsection{Wstęp}
 \subsection{Podsumowanie współczynników}
 \subsection{Kod źródłowy programu}
 \subsection{Interpretacja wyników}
-\section{Analiza rozwiązania}
 \end{document}
