@@ -1,4 +1,5 @@
 function part3
+ chart_size=[10 10 800 600];
  T = [-1500, -1000, -300, -50, -1, 1, 20, 50, 200, 400, 1000, 2000]; % [C]
  H = [178, 176, 168, 161, 160, 160, 160.2, 161, 165, 168, 174, 179]; % [C]
  A = 0.0109; % [m^2]
@@ -21,13 +22,21 @@ function part3
   desiredTemp = 125; % [C]
   startTemp = 1200;
   temp = startTemp; % [C]
-  yTemp = [startTemp];
+  i = 1;
   while temp > desiredTemp
-    mw = mw + step;
+    temp = startTemp;
+    mw = mw + 0.05;
     ieTemp = improvedEuler(x, y, step, approxY, A, mb, mw, cb, cw);
-    temp = ieTemp(2, end);
-    yTemp = [yTemp, temp];
+    temp = ieTemp(1, end)
+
+    fig=figure('Renderer', 'painters', 'Position', chart_size);
+    plot(x, ieTemp(1, :));
+    title('Przebieg czasowy temperatury preta');
+    xlabel('t [s]');
+    ylabel(['T [' char(176) 'C]']);
+    legend('Temperatura preta T_b');
+    saveas(fig,sprintf('../assets/part3/temperatura-preta-%d', i), 'png');
+    close;
+    i = i + 1;
   end
-  mx = 0:step:mw;
-  plot(mx, yTemp, 'o')
 end

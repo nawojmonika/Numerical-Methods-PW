@@ -839,6 +839,20 @@ gdzie: \\
 \(\Delta m_w\) jest małą różnicą masy płynu chłodzącego.
 
 \subsubsection{Metoda Newtona-Raphsona}
+Zakładamy, że funkcja \(f\) jest klasy \(C^2(a,b)\),
+zmienia znak w przedziale \((a,b)\) oraz pochodne pierwsza i druga mają stały znak w rozpatrywanym przedziale.
+\\
+Jako punkt startu obieramy taki punkt \(x_0\), w którym funkcja ma identyczny znak jak druga pochodna:
+\begin{align*}
+	f(x_0)f''(x_0) > 0
+\end{align*}
+Z punktu \((x_0, f(x_0))\) wystawiamy styczną do krzywej \(y = f(x)\):
+\begin{align*}
+	y - f(x_0) = f'(x_0)(x-x_0)
+\end{align*}
+Następnie przecinamy tą styczną z osią \(0x\) i otrzymany w ten sposób punkt przecięcia
+jest pierwszym przybliżeniem pierwiastka.
+
 
 \subsection{Podsumowanie współczynników}
  \begin{flalign*}
@@ -848,12 +862,35 @@ gdzie: \\
  	& m_w = ? \quad [kg] \\
  	& c_b = 0.29 \quad [\frac{J}{kg \cdot K}] \\
  	& c_w = 4.1813 \quad [\frac{J}{kg \cdot K}] \\
+ 	& t = 0.7 \quad [s]
  \end{flalign*}
 \subsection{Kod źródłowy programu}
+\lstinputlisting[language=MatLab, caption=Funkcja sterująca z danymi parametrami oraz rysująca wykresy]{../src/part3.m}
 \subsection{Interpretacja wyników}
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{../assets/part3/temperatura-preta-1.png}
+	\caption{Parametry: \(T_b(0) = 1200\) [\textdegree{}C], \(T_w(0) = 25\)[\textdegree{}C], \(m_w = 0.05\)[kg], \(t = 0.7\)[s]}
+
+	\includegraphics[width=\linewidth]{../assets/part3/temperatura-preta-2.png}
+	\caption{Parametry: \(T_b(0) = 1200\) [\textdegree{}C], \(T_w(0) = 25\)[\textdegree{}C], \(m_w = 0.1\)[kg], \(t = 0.7\)[s]}
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{../assets/part3/temperatura-preta-2.png}
+	\caption{Parametry: \(T_b(0) = 1200\) [\textdegree{}C], \(T_w(0) = 25\)[\textdegree{}C], \(m_w = 0.15\)[kg], \(t = 0.7\)[s]}
+
+	\includegraphics[width=\linewidth]{../assets/part3/temperatura-preta-4.png}
+	\caption{Parametry: \(T_b(0) = 1200\) [\textdegree{}C], \(T_w(0) = 25\)[\textdegree{}C], \(m_w = 0.2\)[kg], \(t = 0.7\)[s]}
+\end{figure}
+
+TO DO - opis wykresów
+
+\subsubsection{Wnioski}
+TO DO
 \section{Część 4}
 \subsection{Wstęp}
 \subsection{Podsumowanie współczynników}
 \subsection{Kod źródłowy programu}
 \subsection{Interpretacja wyników}
+\subsection{Wnioski}
 \end{document}
