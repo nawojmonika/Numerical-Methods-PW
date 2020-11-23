@@ -700,11 +700,25 @@ podprzedziałów o długości \(2h\), w każdym z nich:
 \subsection{Interpretacja wyników}
 \subsubsection{Podzadanie 1}
 Stopień wielomianu aproksymacji został dobrany metodą eksperymentalną z zakresu: 1-5.
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|c|}\hline%
+	Stopień wielomianu & Błąd aproksymacji \\\hline
+	\csvreader[no head, late after line=\\\hline]%
+	{../assets/part2/approx-error.csv}{}%
+	{\thecsvrow&\csvcoli}%
+	\end{tabular}
+	\caption{Stopień wielomianu oraz związany z nim błąd aproksymacji}
+	\label{tab:approx-error}
+\end{table}
+
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{../assets/part2/przewodnictwo-cieplne-h.png}
 	\caption{Parametry: Stopień wielomianu aproksymacji: 4}
 	\label{fig:przewodnictwo-h}
 \end{figure}
+
 \subsubsection{Podzadanie 2}
 \subsubsection{Podzadanie 3}
 \subsection{Wnioski}

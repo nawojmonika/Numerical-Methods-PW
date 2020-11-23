@@ -10,6 +10,8 @@ function part2_1
         approxE(i) = approxError(T, H, pi(i));
     end
 
+    writematrix(approxE,'../assets/part2/approx-error.csv');
+
     p = find(approxE==min(approxE));
     ti = -1500:1:2000;
     approxY = zeros(length(ti), 1);
@@ -22,7 +24,7 @@ function part2_1
 
     fig=figure('Renderer', 'painters', 'Position', chart_size);
     plot(T, H, 'o', ti, approxY, ti, splineY);
-    title('Przyblizenie przewodnictwa cieplnego h');
+    title('Przebieg wspolczynnika przewodnictwa cieplnego h');
     xlabel(['\Delta T [' char(176) 'C]']);
     ylabel('h [W \cdot m^{-2}]');
     legend('h pomiarowe', 'h aproksymowane', 'h interpolowane');
