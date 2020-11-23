@@ -1,4 +1,5 @@
 function part2_1
+    chart_size=[10 10 800 600];
     T = [-1500, -1000, -300, -50, -1, 1, 20, 50, 200, 400, 1000, 2000];
     H = [178, 176, 168, 161, 160, 160, 160.2, 161, 165, 168, 174, 179];
 
@@ -19,5 +20,11 @@ function part2_1
         splineY(j) = spline(T, H, ti(j));
     end
 
+    fig=figure('Renderer', 'painters', 'Position', chart_size);
     plot(T, H, 'o', ti, approxY, ti, splineY);
+    title('Przyblizenie przewodnictwa cieplnego h');
+    xlabel(['\Delta T [' char(176) 'C]']);
+    ylabel('h [W \cdot m^{-2}]');
+    legend('h pomiarowe', 'h aproksymowane', 'h interpolowane');
+    saveas(fig,'../assets/part2/przewodnictwo-cieplne-h', 'png');
 end

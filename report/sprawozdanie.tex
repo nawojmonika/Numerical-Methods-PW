@@ -447,7 +447,7 @@ Współczynnik ten jest opisany poniższymi zależnościami oraz tabelą z danym
 		\hline
 		\( \Delta T \) [\textdegree{}C] &  -1500 & -1000 & -300 & -50 & -1 & 1 & 20 & 50 & 200 & 400 & 1000 & 2000 \\
 		\hline
-		\(h[W * m^{-2}]\) & 178 & 176 & 168 & 161 & 160 & 160 & 160.2 & 161 & 165 & 168 & 174 & 179 \\
+		\(h[W \cdot m^{-2}]\) & 178 & 176 & 168 & 161 & 160 & 160 & 160.2 & 161 & 165 & 168 & 174 & 179 \\
 		\hline
 	\end{tabular}
 	\caption{Dane pomiarowe współczynnika przewodnictwa.}
@@ -695,7 +695,18 @@ podprzedziałów o długości \(2h\), w każdym z nich:
 \subsubsection{Podzadanie 3}
 \lstinputlisting[language=MatLab, caption=Funkcja sterująca z danymi parametrami oraz rysująca wykresy]{../src/part2_3.m}
 
+\newpage
+
 \subsection{Interpretacja wyników}
+\subsubsection{Podzadanie 1}
+Stopień wielomianu aproksymacji został dobrany metodą eksperymentalną z zakresu: 1-5.
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{../assets/part2/przewodnictwo-cieplne-h.png}
+	\caption{Parametry: Stopień wielomianu aproksymacji: 4}
+	\label{fig:przewodnictwo-h}
+\end{figure}
+\subsubsection{Podzadanie 2}
+\subsubsection{Podzadanie 3}
 \subsection{Wnioski}
 \section{Część 3}
 \subsection{Wstęp}
