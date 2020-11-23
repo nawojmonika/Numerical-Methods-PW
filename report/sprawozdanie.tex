@@ -481,7 +481,7 @@ w przedziale -1500 do 2000.
 Całka ta zostanie wyznaczona za pomocą metody parabol.
 
 \subsubsection{Podzadanie 3}
-Podzadanie 3 polega na sprawdzeniu wpływu modelu przybliżającego charakterystykę współczynnika \(h\)
+Podzadanie 3 polega na sprawdzeniu wpływu modelu aproksymowanego charakterystykę współczynnika \(h\)
 na wyniki symulacji rozkładu temperatury pręta oraz oleju chłodzącego.
 
 \subsubsection{Aproksymacja wielomianowa metodą najmniejszych kwadratów}
@@ -733,13 +733,122 @@ różnicy temperatur \(\Delta T\) wynosi:
 {../assets/part2/eavg.csv}{}%
 {\csvcoli}%
 
+\newpage
+
 \subsubsection{Podzadanie 3}
 
 
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{../assets/part2/zmienny-h-1.png}
+	\caption{Parametry: \(T_b(0) = 1200\) [\textdegree{}C], \(T_w(0) = 25\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 3\)[s]}
+
+	\includegraphics[width=\linewidth]{../assets/part2/zmienny-h-2.png}
+	\caption{Parametry: \(T_b(0) = 800\) [\textdegree{}C], \(T_w(0) = 25\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 3\)[s]}
+\end{figure}
+
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{../assets/part2/zmienny-h-3.png}
+	\caption{Parametry: \(T_b(0) = 1100\) [\textdegree{}C], \(T_w(0) = 70\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 3\)[s]}
+
+	\includegraphics[width=\linewidth]{../assets/part2/zmienny-h-4.png}
+	\caption{Parametry: \(T_b(0) = 1200\) [\textdegree{}C], \(T_w(0) = 25\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 5\)[s]}
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{../assets/part2/zmienny-h-5.png}
+	\caption{Parametry: \(T_b(0) = 800\) [\textdegree{}C], \(T_w(0) = 25\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 5\)[s]}
+
+	\includegraphics[width=\linewidth]{../assets/part2/zmienny-h-6.png}
+	\caption{Parametry: \(T_b(0) = 1100\) [\textdegree{}C], \(T_w(0) = 70\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 2\)[s]}
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{../assets/part2/zmienny-h-7.png}
+	\caption{Parametry: \(T_b(0) = 1100\) [\textdegree{}C], \(T_w(0) = 70\)[\textdegree{}C], \(m_w = 5\)[kg], \(t = 2\)[s]}
+
+	\includegraphics[width=\linewidth]{../assets/part2/zmienny-h-8.png}
+	\caption{Parametry: \(T_b(0) = 1100\) [\textdegree{}C], \(T_w(0) = 70\)[\textdegree{}C], \(m_w = 10\)[kg], \(t = 2\)[s]}
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{../assets/part2/zmienny-h-9.png}
+	\caption{Parametry: \(T_b(0) = 1100\) [\textdegree{}C], \(T_w(0) = 70\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 4\)[s]}
+
+	\includegraphics[width=\linewidth]{../assets/part2/zmienny-h-10.png}
+	\caption{Parametry: \(T_b(0) = 1100\) [\textdegree{}C], \(T_w(0) = 70\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 5\)[s]}
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{../assets/part2/zmienny-h-11.png}
+	\caption{Parametry: \(T_b(0) = 1100\) [\textdegree{}C], \(T_w(0) = 70\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 4\)[s]}
+
+	\includegraphics[width=\linewidth]{../assets/part2/zmienny-h-12.png}
+	\caption{Parametry: \(T_b(0) = 1100\) [\textdegree{}C], \(T_w(0) = 70\)[\textdegree{}C], \(m_w = 2.5\)[kg], \(t = 5\)[s]}
+\end{figure}
+
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|c|}\hline%
+	Nr próby & oczekiwane \(T_b(t)\)[\textdegree{}C] & przybliżone \(T_b(t)\) [\textdegree{}C] & \(\delta T_b(t)\) \\\hline
+	\csvreader[no head, late after line=\\\hline]%
+	{../assets/part2/wyniki.csv}{}%
+	{\thecsvrow&\csvcoli&\csvcoliii&\csvcoliv}%
+	\end{tabular}
+	\caption{Temperatury końcowe pręta przybliżone za pomocą ulepszonej metody Eulera z aproksymowanym współczynnikiem przewodnictwa ciepła \(h\)}
+	\label{tab:approx-wyniki-1}
+\end{table}
+
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|c|}\hline%
+	Nr próby & oczekiwane \(T_w(t)\)[\textdegree{}C] & przybliżone \(T_w(t)\) [\textdegree{}C] & \(\delta T_w(t)\) \\\hline
+	\csvreader[no head, late after line=\\\hline]%
+	{../assets/part2/wyniki.csv}{}%
+	{\thecsvrow&\csvcolii&\csvcolv&\csvcolvi}%
+	\end{tabular}
+	\caption{Temperatury końcowe oleju chłodzącego przybliżone za pomocą ulepszonej metody Eulera z aproksymowanym współczynnikiem przewodnictwa ciepła \(h\)}
+	\label{tab:approx-wyniki-2}
+\end{table}
+
+W celu zbadania wpływu modelu aproksymowanego charakterystykę współczynnika przewodnictwa cieplnego \(h\) na wyniki symulacji
+temperatury pręta oraz oleju chłodzącego zostały powtórzone próby eksperymentalne z \textbf{części I}
+z użyciem ulepszonej metody Eulera.
+Dodatkowo został obliczony błąd temperatury końcowej pręta oraz oleju chłodzącego po symulacji
+względem danych pozyskanych w eksperymencie fizycznym.
+
 \subsection{Wnioski}
+TO DO
+
+\newpage
+
 \section{Część 3}
 \subsection{Wstęp}
+Część trzecia projektu polega na wyznaczeniu minimalnej wartości masy oleju chłodzącego niezbędnego
+do wychłodzenia pręta w pewnym czasie \(t\) do określonej temperatury. \\
+
+\textbf{Metoda Newtona-Raphsona} została wykorzystana do rozwiązania tego zagadnienia. \\
+W przypadku tego zagadnienia przyjmuje postać:
+\begin{flalign*}
+	m^{(i+1)}_w = m^{(i)}_w - \frac{T_b(m^{(i)}_w)}{T_b'(m^{(i)}_w)}
+\end{flalign*}
+Aby wyznaczyć wartość pochodnej należy użyć jej numerycznego przybliżenia:
+\begin{flalign*}
+	T_b'(m_w) = \frac{dT_b}{dm_w} |_{t=0.7s} \approx \frac{T_b(m_w + \Delta m_w) - T_b(m_w)}{\Delta m_w}
+\end{flalign*}
+gdzie: \\
+\(\Delta m_w\) jest małą różnicą masy płynu chłodzącego.
+
+\subsubsection{Metoda Newtona-Raphsona}
+
 \subsection{Podsumowanie współczynników}
+ \begin{flalign*}
+ 	& h = h(\Delta T) \quad [\frac{J}{s \cdot m^2}] \\
+ 	& A = 0.0109 \quad [m^2] \\
+ 	& m_b = 0.25 \quad [kg] \\
+ 	& m_w = ? \quad [kg] \\
+ 	& c_b = 0.29 \quad [\frac{J}{kg \cdot K}] \\
+ 	& c_w = 4.1813 \quad [\frac{J}{kg \cdot K}] \\
+ \end{flalign*}
 \subsection{Kod źródłowy programu}
 \subsection{Interpretacja wyników}
 \section{Część 4}
