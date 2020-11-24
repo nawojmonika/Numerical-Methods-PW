@@ -75,6 +75,7 @@ tabsize=2
 
 \lstset{style=mystyle}
 
+\renewcommand{\lstlistlistingname}{Spis listingów}
 %----------------------------------------------------------------------------------------
 %	ASSIGNMENT INFORMATION
 %----------------------------------------------------------------------------------------
@@ -889,8 +890,41 @@ TO DO - opis wykresów
 TO DO
 \section{Część 4}
 \subsection{Wstęp}
+Ostatnia część projektu polega na zaprojektowaniu i implementacji złożonego programu,
+pozwalającego określić optymalne parametry zbiornika z olejem chłodzącym
+pod względem minimalizacji kosztów produkcji, biorąc pod uwagę pewne narzucone ograniczenia.
 \subsection{Podsumowanie współczynników}
+\begin{itemize}
+	\item W ciągu 24 godzin należy schłodzić minimum 100 000 prętów.
+	\item Wymiana jednego pręta wynosi 5 sekund.
+	\item Posiadamy maksymalnie 100 stanowisk chłodzenia.
+	\item Posiadamy nieskończoną liczbę zbiorników chłodzących
+	\item Czas wymiany jednego zbiornika wynosi 30 sekund.
+	\item Czas schłodzenia zbiornika z temperatury 125 stopni do 25 stopni zależy
+		liniowo od masy płynu chłodzącego:
+		\begin{flalign*}
+			t = m_w \cdot 0.15 \quad [h]
+		\end{flalign*}
+	\item Koszt wyprodukowania zbiornika zależy od masy:
+	\begin{flalign*}
+		k_{zb} = 100 \cdot m_w \quad [PLN]
+	\end{flalign*}
+	\item Koszt oleju chłodzącego wynosi:
+	\begin{flalign*}
+		k_w = 20 \cdot m_w \quad [PLN]
+	\end{flalign*}
+	\item Zakładamy, że po schłodzeniu 2000 prętów olej chłodzący musi być wymieniony.
+\end{itemize}
+
+\newpage
+
 \subsection{Kod źródłowy programu}
+\lstinputlisting[language=MatLab, caption=Funkcja sterująca z danymi parametrami oraz rysująca wykresy]{../src/part4.m}
 \subsection{Interpretacja wyników}
 \subsection{Wnioski}
+
+\listoftables
+\lstlistoflistings
+\listoffigures
+
 \end{document}
