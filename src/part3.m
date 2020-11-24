@@ -9,7 +9,8 @@ function part3
  step = 0.01;
  x = 0:step:0.7; % [s]
  p = 4;
- ti = -1500:1:2000; % [C]
+ xStep = abs(T(end) - T(1)) / length(x);
+ ti = T(1):xStep:T(end); % [C]
  approxH = zeros(length(ti), 1);
 
  for i=1:length(ti)
@@ -24,7 +25,7 @@ function part3
   temp = startTemp; % [C]
   i = 1;
   while temp > desiredTemp
-    temp = startTemp;
+    temp = y(1);
     mw = mw + 0.05;
     ieTemp = improvedEuler(x, y, step, approxH, A, mb, mw, cb, cw);
     temp = ieTemp(1, end)

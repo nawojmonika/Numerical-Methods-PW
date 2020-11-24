@@ -14,12 +14,6 @@ function part2_3
     cw = 4.1813; % [J /kg * K]
     step = 0.1;
     p = 4;
-    ti = T(1):step:T(end); % [C]
-    approxh = zeros(length(ti), 1);
-
-    for i=1:length(ti)
-        approxh(i) = approx(T, H, p, ti(i));
-    end
 
     if exist('../assets/part2/wyniki.csv', 'file')==2
        delete('../assets/part2/wyniki.csv');
@@ -29,6 +23,14 @@ function part2_3
         y = [ Tb(j)
              Tw(j)];
         x = 0:step:t(j);
+        xStep = abs(T(end) - T(1)) / length(x);
+        ti = T(1):xStep:T(end); % [C]
+        approxh = zeros(length(ti), 1);
+
+        for i=1:length(ti)
+            approxh(i) = approx(T, H, p, ti(i));
+        end
+
         h(1:length(x)) = 160; % [J / s * m^2]
         yie = improvedEuler(x, y, step, h, A, mb, mw(j), cb, cw);
         approxYie = improvedEuler(x, y, step, approxh, A, mb, mw(j), cb, cw);
