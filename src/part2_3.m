@@ -14,7 +14,7 @@ function part2_3
     cw = 4.1813; % [J /kg * K]
     step = 0.1;
     p = 4;
-    ti = -1500:1:2000; % [C]
+    ti = T(1):step:T(end); % [C]
     approxh = zeros(length(ti), 1);
 
     for i=1:length(ti)
@@ -22,10 +22,10 @@ function part2_3
     end
 
     if exist('../assets/part2/wyniki.csv', 'file')==2
-          delete('../assets/part2/wyniki.csv');
-        end
+       delete('../assets/part2/wyniki.csv');
+    end
 
-    for j=1:length(T)
+    for j=1:length(Tb)
         y = [ Tb(j)
              Tw(j)];
         x = 0:step:t(j);

@@ -10,10 +10,10 @@ function part3
  x = 0:step:0.7; % [s]
  p = 4;
  ti = -1500:1:2000; % [C]
- approxY = zeros(length(ti), 1);
+ approxH = zeros(length(ti), 1);
 
  for i=1:length(ti)
-     approxY(i) = approx(T, H, p, ti(i));
+     approxH(i) = approx(T, H, p, ti(i));
  end
 
   mw = 0; % [kg]
@@ -26,7 +26,7 @@ function part3
   while temp > desiredTemp
     temp = startTemp;
     mw = mw + 0.05;
-    ieTemp = improvedEuler(x, y, step, approxY, A, mb, mw, cb, cw);
+    ieTemp = improvedEuler(x, y, step, approxH, A, mb, mw, cb, cw);
     temp = ieTemp(1, end)
 
     fig=figure('Renderer', 'painters', 'Position', chart_size);
