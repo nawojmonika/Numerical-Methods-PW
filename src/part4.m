@@ -29,10 +29,12 @@ function part4
         approxH(i) = approx(T, H, p, ti(i));
     end
 
-    min_mw = getMinMw(Tb_0, Tw_max, cool_Temp, step, x, approxH);
-
     % Simulation
+    min_mw = getMinMw(Tb_0, Tw_max, cool_Temp, step, x, approxH);
     con_cool_t = getCoolingTime(min_mw); % [s]
     con_num = getContainerNum(bars, Tw_0, Tw_max, Tb_0, min_mw, bar_t, con_cool_t, step, x, approxH);
-
+    kw = getOilCost(min_mw);
+    kc = getContainerCost(min_mw);
+    cost = getCost(kw, kc, con_num);
 end
+
