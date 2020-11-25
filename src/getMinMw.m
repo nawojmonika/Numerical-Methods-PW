@@ -16,5 +16,6 @@ function mw = getMinMw(Tb, Tw, Tbt, step, x, approxH)
     end
 
     mw = tempmw;
-
 end
+
+

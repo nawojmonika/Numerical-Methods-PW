@@ -5,12 +5,10 @@ function part4
     time = 24 * 60 * 60; % [s]
     container_change_t = 30; % [s]
     bar_change_t = 5; % [s]
-    m_b = 0.25; % [kg]
-    container_cool_t = m_b * 0.15 * 60 * 60; % [s]
     station_num = 100;
     Tb_0 = 1200; % [C]
     Tw_0 = 25; % [C]
-    cool_T = 125; % [C]
+    cool_Temp = 125; % [C]
 
     % Calculations per 1  station:
     bars = bar_num / station_num;
@@ -31,7 +29,10 @@ function part4
         approxH(i) = approx(T, H, p, ti(i));
     end
 
-    min_mw = getMinMw(Tb_0, Tw_0, cool_T, step, x, approxH);
-    max_mw = getMinMw(Tb_0, Tw_max, cool_T, step, x, approxH);
+    min_mw = getMinMw(Tb_0, Tw_max, cool_Temp, step, x, approxH);
+
+    % Simulation
+    con_cool_t = getCoolingTime(min_mw); % [s]
+    con_num = getContainerNum(bars, Tw_0, Tw_max, Tb_0, min_mw, bar_t, con_cool_t, step, x, approxH);
 
 end
