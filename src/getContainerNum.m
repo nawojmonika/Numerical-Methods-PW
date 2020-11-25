@@ -6,20 +6,26 @@ function cn = getContainerNum(bar_num, Tw_0, Tw_max, Tb_0, mw, bar_t, con_cool_t
 
     conNum = 1;
     Tw = Tw_0; % [C]
-    coolingCon = 0;
-    coolingIndex = 0;
+    coolingConts = [];
 
     for i=1:bar_num
-        if (Tw > Tw_max)
-            if (coolingCon > 0 && (i - coolingIndex) * bar_t >= con_cool_t)
-                coolingCon = coolingCon - 1;
-            else
+        if Tw > Tw_max
+            canReuse = false;
+            if isempty(coolingConts) == 0
+                for j=1:length(coolingConts)
+                    if (i - coolingConts(j)) * bar_t >= con_cool_t
+                        coolingConts(j) = [];
+                        canReuse = true;
+                        break;
+                    end
+                end
+            end
+            if canReuse == false
                 conNum = conNum + 1;
             end
-            coolingCon = coolingCon + 1;
+            coolingConts(length(coolingConts) + 1) = i;
             Tw = Tw_0;
-            coolingIndex = i;
-        end
+       end
        y = [ Tb_0
                Tw]; % [C]
        ieTemp = improvedEuler(x, y, step, approxH, A, mb, mw, cb, cw);

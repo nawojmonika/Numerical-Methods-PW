@@ -1,4 +1,5 @@
 function part4
+    chart_size=[10 10 800 600];
     T = [-1500, -1000, -300, -50, -1, 1, 20, 50, 200, 400, 1000, 2000]; % [C]
     H = [178, 176, 168, 161, 160, 160, 160.2, 161, 165, 168, 174, 179]; % [C]
     bar_num = 100000;
@@ -30,11 +31,33 @@ function part4
     end
 
     % Simulation
-    min_mw = getMinMw(Tb_0, Tw_max, cool_Temp, step, x, approxH);
-    con_cool_t = getCoolingTime(min_mw); % [s]
-    con_num = getContainerNum(bars, Tw_0, Tw_max, Tb_0, min_mw, bar_t, con_cool_t, step, x, approxH);
-    kw = getOilCost(min_mw);
-    kc = getContainerCost(min_mw);
-    cost = getCost(kw, kc, con_num);
+    initial_mw = getMinMw(Tb_0, Tw_0, cool_Temp, step, x, approxH);
+    initial_cool_t = getCoolingTime(initial_mw); % [s]
+    initial_con_num = getContainerNum(bars, Tw_0, Tw_max, Tb_0, initial_mw, bar_t, initial_cool_t, step, x, approxH);
+    initial_kw = getOilCost(initial_mw);
+    initial_kc = getContainerCost(initial_mw);
+    initial_cost = getCost(initial_kw, initial_kc, initial_con_num);
+
+    max_mw = getMinMw(Tb_0, Tw_max, cool_Temp, step, x, approxH);
+
+    mw_step = 0.05;
+    x_mw = initial_mw:mw_step:max_mw;
+    y_cost(1:length(x_mw)) = initial_cost;
+    y_con(1:length(x_mw)) = initial_con_num;
+    i=2;
+
+    for mw = initial_mw + mw_step : mw_step:max_mw
+        cool_t = getCoolingTime(mw); % [s]
+        con_num = getContainerNum(bars, Tw_0, Tw_max, Tb_0, mw, bar_t, cool_t, step, x, approxH);
+        kw = getOilCost(mw);
+        kc = getContainerCost(mw);
+        cost = getCost(kw, kc, con_num);
+        y_cost(i) = cost;
+        y_con(i) = con_num;
+        i = i + 1;
+    end
+    
+    plot(x_mw, y_con);
+
 end
 
