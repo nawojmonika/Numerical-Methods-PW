@@ -21,14 +21,12 @@ function part3
   y = [ 1200
         25];
   desiredTemp = 125; % [C]
-  startTemp = 1200;
-  temp = startTemp; % [C]
+  temp = y(1); % [C]
   i = 1;
   while temp > desiredTemp
-    temp = y(1);
     mw = mw + 0.05;
     ieTemp = improvedEuler(x, y, step, approxH, A, mb, mw, cb, cw);
-    temp = ieTemp(1, end)
+    temp = ieTemp(1, end);
 
     fig=figure('Renderer', 'painters', 'Position', chart_size);
     plot(x, ieTemp(1, :));

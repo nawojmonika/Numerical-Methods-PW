@@ -31,6 +31,7 @@ function part4
         approxH(i) = approx(T, H, p, ti(i));
     end
 
-    min_mw = getMinMw(Tb_0, Tw_0, cool_T, bar_t, step, x, approxH);
+    min_mw = getMinMw(Tb_0, Tw_0, cool_T, step, x, approxH);
+    max_mw = getMinMw(Tb_0, Tw_max, cool_T, step, x, approxH);
 
 end
