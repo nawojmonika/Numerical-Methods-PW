@@ -687,7 +687,13 @@ podprzedziałów o długości \(2h\), w każdym z nich:
 
 \lstinputlisting[language=MatLab, caption=Błąd aproksymacji]{../src/approxError.m}
 
-\lstinputlisting[language=MatLab, caption=Interpolacja funkcjami sklejanymi 3-iego stopnia]{../src/spline.m}
+\lstinputlisting[language=MatLab, caption=Interpolacja funkcjami sklejanymi 1-iego stopnia]{../src/spline.m}
+
+\lstinputlisting[language=MatLab, caption=Funkcja licząca pochodną]{../src/calcDerivative.m}
+
+\lstinputlisting[language=MatLab, caption=Funkcja licząca sumę splajnów i ich współczynników w danym przedziale]{../src/getIntervaly.m}
+
+\lstinputlisting[language=MatLab, caption=Interpolacja funkcjami sklejanymi 3-iego stopnia]{../src/spline3degree.m}
 
 \subsubsection{Podzadanie 2}
 \lstinputlisting[language=MatLab, caption=Funkcja sterująca z danymi parametrami oraz rysująca wykresy]{../src/part2_2.m}
@@ -699,8 +705,6 @@ podprzedziałów o długości \(2h\), w każdym z nich:
 
 \subsubsection{Podzadanie 3}
 \lstinputlisting[language=MatLab, caption=Funkcja sterująca z danymi parametrami oraz rysująca wykresy]{../src/part2_3.m}
-
-\newpage
 
 \subsection{Interpretacja wyników}
 \subsubsection{Podzadanie 1}
@@ -719,8 +723,11 @@ Stopień wielomianu aproksymacji został dobrany metodą eksperymentalną z zakr
 \end{table}
 
 \begin{figure}[H]
+	\includegraphics[width=\linewidth]{../assets/part2/splajny.png}
+	\caption{Parametry: Stopień wielomianu aproksymacji: 4, liczba przedziałów interpolacji: 10}
+
 	\includegraphics[width=\linewidth]{../assets/part2/przewodnictwo-cieplne-h.png}
-	\caption{Parametry: Stopień wielomianu aproksymacji: 4}
+	\caption{Parametry: Stopień wielomianu aproksymacji: 4, liczba przedziałów interpolacji: 10}
 	\label{fig:przewodnictwo-h}
 \end{figure}
 
@@ -967,6 +974,9 @@ liczby prętów został przemnożony przez ilość stacji.
 
 Wzrost masy płynu chłodzącego \(m_w\) powoduje gwałtowny wzrost
 całkowitego kosztu chłodzenia przypadającego na jedną stację chłodzącą.
+Wpływ na ten wzrost kosztów ma nie tylko masa płynu chłodzącego \(m_w\),
+ale także liczba prętów jaka przypada na jeden zbiornik, ponieważ
+po 2000 pręcie należy wymienić całkowicie olej chłodzący w tym zbiorniku.
 Nawet przy większej ilości zbiorników mniejsza masa \(m_w\) wiąże się z mniejszym
 kosztem chłodzenia pręta.
 Kosztu całkowitego procesu chłodzenia rośnie liniowo

@@ -8,9 +8,27 @@ function part2_2
     approxY = zeros(length(ti), 1);
     splineY = zeros(length(ti), 1);
 
+     n = 10;
+     a = -1499;
+     b = 2000;
+     h = (b - a) / n;
+     par_x = zeros(1, n);
+     par_y = zeros(1, n);
+     dStep = 0.00000001;
+     alpha = abs(calcDerivative(T, H, p, a, dStep));
+     beta = abs(calcDerivative(T, H, p, b, dStep));
+
+     for k=0:(n+1)
+         x =  a + (k * h);
+         par_x(k + 1) = x;
+         par_y(k + 1) = spline(T, H, x);
+     end
+
+        splineY = zeros(length(ti), 1);
+        ti = -1498:0.1:2000;
     for i=1:length(ti)
         approxY(i) = approx(T, H, p, ti(i));
-        splineY(i) = spline(T, H, ti(i));
+        splineY(i) = spline3degree(par_x, par_y, alpha, beta,n, h, ti(i));
     end
 
     eavg = avgFactorDiff(T, H, p);
