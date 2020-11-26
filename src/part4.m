@@ -23,7 +23,7 @@ function part4
         end
         station_x = round((a+b)/2);
         bars = round(bar_num / station_x);
-        
+
         oil_change_num = bars / 2000;
         oil_change_t = oil_change_num * container_change_t; % [s]
         max_t = time - (oil_change_t +  container_change_t + (bars * bar_change_t)); % [s]
@@ -65,22 +65,29 @@ function part4
             y_con(k) = con_num;
             k = k + 1;
         end
-
         fig=figure('Renderer', 'painters', 'Position', chart_size);
         plot(x_mw, y_con);
-        title(sprintf('Przebieg ilosci zbiornikow wzgledem masy m_w przy ilosci pretow: %d', bars));
+        title('Przebieg ilosci zbiornikow wzgledem masy m_w');
         xlabel('Masa plynu chlodzacego m_w [kg]');
         ylabel('Ilosc zbiornikow');
         saveas(fig,sprintf('../assets/part4/ilosc-zbiornikow-%d', station_x), 'png');
         close;
 
+        fig=figure('Renderer', 'painters', 'Position', chart_size);
+        plot(x_mw, y_cost);
+        title('Przebieg kosztu calkowitego chlodzenia wzgledem masy m_w');
+        xlabel('Masa plynu chlodzacego m_w [kg]');
+        ylabel('Koszt chlodzenia [kg]');
+        saveas(fig,sprintf('../assets/part4/kosz-chlodzenia-%d', station_x), 'png');
+        close;
+
         stations(end + 1) = station_x;
-        cost(length(stations)) = min(y_cost);
+        cost(length(stations)) = min(y_cost) * station_x;
         a = station_x;
     end
     fig=figure('Renderer', 'painters', 'Position', chart_size);
     plot(stations, cost);
-    title('Stosunek kosztu pojedynczej stacji do liczby stacji chlodzacych');
+    title('Stosunek kosztu calkowitego do liczby stacji chlodzacych');
     xlabel('Liczba stacji chlodzacych');
     ylabel('Koszt [PLN]');
     saveas(fig, '../assets/part4/koszt', 'png');

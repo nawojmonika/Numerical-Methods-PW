@@ -897,40 +897,6 @@ Ostatnia część projektu polega na zaprojektowaniu i implementacji złożonego
 pozwalającego określić optymalne parametry zbiornika z olejem chłodzącym
 pod względem minimalizacji kosztów produkcji, biorąc pod uwagę pewne narzucone ograniczenia.
 
-\subsubsection{Metoda bisekcji}
-Zakładamy, że funkcja \(f\) jest ciągła na przedziale \([a,b]\) oraz:
-\begin{flalign*}
-	f(a)f(b) < 0
-\end{flalign*}
-Dzielimy przedział \([a,b]\) na dwie połowy w punkcie:
-\begin{flalign*}
-	x_1 = \frac{a + b}{2}
-\end{flalign*}
-Następnie:
-\begin{enumerate}
-	\item Wybieramy taki przedział, w którym funkcja \(f\) zmienia znak
-	\item Następnie dzielimy go na połowę punktem \(x_2\)
-	\item Czynność powtarzamy do momentu osiągnięcia ustalonego wcześniej warunku
-\end{enumerate}
-
-Jeżeli \(f(x_1) = 0\), wówczas \(x_1\) jest pierwiastkiem równania. \\
-Nastomiast jeżeli \(f(x_1)\) jest różne od zera to z otrzymanych dwóch przedziałów:
-\([a, x_1]\) i \([x_1, b]\) wybieramy ten, w którym funkcja \(f\) zmienia znak. \\
-Następnie przedział ten dzielimy na połowy punktem \(x_2\) i badamy wartość funkcji w tym punkcie.
-Powtarzamy tą czynność \(n\) razy. \\
-Otrzymujemy \(f(x_n) = 0\) lub ciąg podprzedziałów takich, że:
-\begin{flalign*}
-	f(x_n)f(x_{n+1}) < 0
-\end{flalign*}
-gdzie \(x_n, x_{n+1}\) są końcami przedziału, a jego długość wynosi:
-\begin{flalign*}
-	|x_n - x_{n+1}| < \frac{1}{2^n}(b-a)
-\end{flalign*}
-Tereotycznie można uzyskać dowolną dokładność przy obliczeniach pierwiastka, stosujac iteracje
-do spełnienia warunku:
-\begin{flalign*}
-	|x_n - x_{n+1}| < \frac{1}{2^n}(b-a) < \epsilon
-\end{flalign*}
 \subsection{Podsumowanie współczynników}
 \begin{itemize}
 	\item W ciągu 24 godzin należy schłodzić minimum 100 000 prętów.
@@ -973,7 +939,8 @@ do spełnienia warunku:
 \subsection{Interpretacja wyników}
 
 Ze względu na to, że wszystkie stacje chłodzące pracują w tym samym czasie z identyczną liczbą prętów przypadającą
-na stacje obliczenia zostały przeprowadzone na przykładzie jednej stacji chłodzącej, a całkowity koszt chłodzenia przypadajacej
+na stacje obliczenia zostały przeprowadzone na przykładzie jednej stacji chłodzącej.
+Natomiast całkowity koszt chłodzenia przypadającej na stację
 liczby prętów został przemnożony przez ilość stacji.
 
 \begin{figure}[H]
@@ -984,9 +951,32 @@ liczby prętów został przemnożony przez ilość stacji.
 	\caption{Parametry: Ilość stacji chłodzących: 78}
 \end{figure}
 
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{../assets/part4/kosz-chlodzenia-55.png}
+	\caption{Parametry: Ilość stacji chłodzących: 55}
+
+	\includegraphics[width=\linewidth]{../assets/part4/kosz-chlodzenia-78.png}
+	\caption{Parametry: Ilość stacji chłodzących: 78}
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{../assets/part4/koszt.png}
+	\caption{Stosunek kosztu całkowitego chłodzenia do ilości pracującyh stacji chłodzących}
+\end{figure}
+
+
+Wzrost masy płynu chłodzącego \(m_w\) powoduje gwałtowny wzrost
+całkowitego kosztu chłodzenia przypadającego na jedną stację chłodzącą.
+Nawet przy większej ilości zbiorników mniejsza masa \(m_w\) wiąże się z mniejszym
+kosztem chłodzenia pręta.
+Kosztu całkowitego procesu chłodzenia rośnie liniowo
+wraz ze wzrostem liczby pracujących równolegle stacji chłodniczych.
 
 \subsection{Wnioski}
-
+Najbardziej optymalnymi współczynnikami są:
+niewielka masa płynu chłodzącego \(m_w\),
+przy średniej ilości niewielkich zbiorników
+oraz średnij ilości działąjącyh jednocześnie stacji chłodzących.
 \newpage
 
 \listoftables
